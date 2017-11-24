@@ -1,48 +1,60 @@
-var connectionId = ''
-var stringReceived = '';
-var arrayReceived = [];
+let connectionId = ''
+let stringReceived = '';
+let arrayReceived = [];
 
 /* Interprets an ArrayBuffer as UTF-8 encoded string data. */
 function convertArrayBufferToString(buf){
-  var bufView = new Uint8Array(buf);
-  var encodedString = String.fromCharCode.apply(null, bufView);
+  let bufView = new Uint8Array(buf);
+  let encodedString = String.fromCharCode.apply(null, bufView);
   return decodeURIComponent(escape(encodedString));
 }
 
 
 
-var onConnectCallback = function(connectionInfo){
+let onConnectCallback = function(connectionInfo){
   //  onReceiveイベントでconnectionIdの一致を確認するので、保持しておく
   connectionId = connectionInfo.connectionId;
 }
 
 
-var clickedListener = function() {
+let clickedListener = function() {
   console.log('clicked');
 
-  var e = document.getElementById('port');
-  var port = e.options[e.selectedIndex].value;
+  let e = document.getElementById('port');
+  let port = e.options[e.selectedIndex].value;
+
+  let b = document.getElementById('bitrate');
+  let bitrate = Number(b.options[b.selectedIndex].value);
 
   document.getElementById('connect').value = 'dicconect';
 
-  chrome.serial.connect(port, {bitrate: 115200}, onConnectCallback);
+  chrome.serial.connect(port, {bitrate: bitrate}, onConnectCallback);
+
 }
 document.getElementById('connect').addEventListener("click", clickedListener, false);
 
 
-var loadedListener = function() {
+let loadedListener = function() {
   console.log('loaded');
 
   //  デバイスをリスト化して、画面に表示する
   chrome.serial.getDevices(function(devices) {
 
-    var selection = document.getElementById('port');
-
+    //110，300，1200，2400，4800，9600，19200，38400，57600，115200
+    let bitrate = document.getElementById('bitrate');
+    let bitrates = [115200,57600,38400,19200,9600,4800,2400,1200,300,110];
+    for(let br of bitrates){
+      let option = document.createElement('option');
+      option.value = br;
+      option.text = ' ' + br + ' bps';
+      bitrate.appendChild(option);  
+    }
+    
+    let selection = document.getElementById('port');
     devices.forEach(function(port){
       //  select menu に追加
-      var option = document.createElement('option');
+      let option = document.createElement('option');
       option.value = port.path;
-      //  今のところ、手元の環境ではport.displayNameが設定されていない
       option.text = port.displayName ? port.path + ' (' + port.displayName + ')' : port.path;
       selection.appendChild(option);
     });
@@ -51,13 +63,13 @@ var loadedListener = function() {
 window.addEventListener('load', loadedListener, false);
 
 
-var onReceiveCallback = function(info) {
-  var box = document.getElementById('textbox');
+let onReceiveCallback = function(info) {
+  let box = document.getElementById('textbox');
   console.log('received');
   
   if (info.connectionId == connectionId && info.data) {
     // 取得文字列
-    var str = convertArrayBufferToString(info.data);
+    let str = convertArrayBufferToString(info.data);
     console.log(str);
     box.value += str;  // textarea に出力
     box.scrollTop = box.scrollHeight;
@@ -67,15 +79,15 @@ chrome.serial.onReceive.addListener(onReceiveCallback);
 
 
 
-var onDisconnectCallback = function(result) {
+let onDisconnectCallback = function(result) {
   if (result) { console.log('disconnected'); }
   else { console.log('error'); }
 }
 
-var onReceiveErrorCallback = function(info) {
+let onReceiveErrorCallback = function(info) {
   console.log('end');
   console.log(arrayReceived.join(','));
 
-  var disconnect = chrome.serial.disconnect(connectionId, onDisconnectCallback)
+  let disconnect = chrome.serial.disconnect(connectionId, onDisconnectCallback)
 }
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
