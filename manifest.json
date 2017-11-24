@@ -1,0 +1,14 @@
+{
+  "name": "Chrome Serial Monitor",
+  "description": "Chrome Serial Monitor",
+  "version": "1",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions": [
+     "serial"
+  ]
+}
