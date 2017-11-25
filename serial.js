@@ -1,4 +1,4 @@
-let connectionId = ''
+var connectionId = ''
 let stringReceived = '';
 let arrayReceived = [];
 
@@ -63,16 +63,25 @@ let loadedListener = function() {
 window.addEventListener('load', loadedListener, false);
 
 
+let scrollflag = true;
 let onReceiveCallback = function(info) {
   let box = document.getElementById('textbox');
-  console.log('received');
+  //console.log('received');
   
   if (info.connectionId == connectionId && info.data) {
     // 取得文字列
     let str = convertArrayBufferToString(info.data);
-    console.log(str);
+    //console.log(str);
+    let scro = box.scrollHeight - box.scrollTop;
+  
+    // console.log(scro)
+    if(scrollflag && scro > 604) scrollflag = false;
+    else if(!scrollflag && scro < 900) scrollflag = true; 
     box.value += str;  // textarea に出力
-    box.scrollTop = box.scrollHeight;
+    
+    if(scrollflag) box.scrollTop = box.scrollHeight;
+    //document.getElementById('log').innerHTML += str + "<br>";
+    
   }
 };
 chrome.serial.onReceive.addListener(onReceiveCallback);

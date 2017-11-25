@@ -1,5 +1,8 @@
 div.content {
 	padding:10px;
+	width:100%;
+	height:100%;
+	overflow: scroll;
 }
 
 div.setting {
@@ -11,3 +14,9 @@ div.text {
 	margin: 10px;
 }
 
+div.log {
+  width: 500px;
+  height: 500px;
+  background-color: red;
+  overflow: scroll;
+}
