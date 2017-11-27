@@ -9,23 +9,22 @@ function convertArrayBufferToString(buf){
   return decodeURIComponent(escape(encodedString));
 }
 
+/* Converts a string to UTF-8 encoding in a Uint8Array; returns the array */
+function convertStringToArrayBuffer(str) {
+   var encodedString = unescape(encodeURIComponent(str));
+   var bytes = new Uint8Array(encodedString.length);
+   for (var i = 0; i < encodedString.length; ++i) {
+      bytes[i] = encodedString.charCodeAt(i);
+   }
+   return bytes.buffer;
+};
+
 // ------------------------------------------< Device Load >------------------------------------------
 let loaded = function() {
   console.log('loaded');
 
   //  デバイスをリスト化して、画面に表示する
   chrome.serial.getDevices(function(devices) {
-
-    // boudrate 設定
-    // 110，300，1200，2400，4800，9600，19200，38400，57600，115200
-    let bitrate = document.getElementById('bitrate');
-    let bitrates = [115200,57600,38400,19200,9600,4800,2400,1200,300,110];
-    for(let br of bitrates){
-      let option = document.createElement('option');
-      option.value = br;
-      option.text = ' ' + br + ' bps';
-      bitrate.appendChild(option);  
-    }
     
     // port 設定
     let selection = document.getElementById('port');
@@ -67,7 +66,7 @@ let onConnectCallback = function(connectionInfo){
 
 // ------------------------------------------< Receive Data >------------------------------------------
 let scrollflag = true;
-let onReceiveCallback = function(info) {
+let receiveData = function(info) {
   let box = document.getElementById('textbox');
   //console.log('received');
   
@@ -88,7 +87,18 @@ let onReceiveCallback = function(info) {
     
   }
 };
-chrome.serial.onReceive.addListener(onReceiveCallback);
+chrome.serial.onReceive.addListener(receiveData);
+
+
+// ------------------------------------------< Send Data >------------------------------------------
+let sendData = function() {
+  let data = document.getElementById('sendData').value;
+  console.log('send: ' + data);
+  // let port = e.options[e.selectedIndex].value;
+  chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function() {} );
+
+}
+document.getElementById('sendbtn').addEventListener("click", sendData, false);
 
 
 // ------------------------------------------< On Discconect >------------------------------------------

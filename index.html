@@ -1,26 +1,54 @@
-<!doctype html>
-<head>
-	<meta charset="UTF-8">
-	<title>Assist Serial Monitor</title>
-	<link rel="stylesheet" href="bootstrap.min.css">
-	<link rel="stylesheet" href="mystyle.css">
+	<!doctype html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Assist Serial Monitor</title>
+		<link rel="stylesheet" href="bootstrap.min.css">
+		<link rel="stylesheet" href="mystyle.css">
 
-</head>
-<body>
-	<div class="content">
-		<h2 style="color:#428bca">Assist Serial Monitor</h1>
-		<div class="setting">
-			<div class="col-sm-6"><select id="port" class="form-control" class="selectpicker"></select></div>
-			<div class="col-sm-3"><select id="bitrate" class="form-control" class="selectpicker" ></select></div>
-			<div class="col-sm-3"><button id="connect" class="btn btn-primary">connect</button></div>
+	</head>
+	<body>
+		<div class="content">
+			<h2 style="color:#428bca">Assist Serial Monitor</h1>
+			<div class="setting">
+				<div class="col-sm-6"><select id="port" class="form-control" class="selectpicker"></select></div>
+				<div class="col-sm-3">
+					<select id="bitrate" class="form-control" class="selectpicker" >
+						<option value="115200" selected> 115200bps</option>
+						<option value= "57600">  57600bps</option>
+						<option value= "36400">  36400bps</option>
+						<option value= "19200">  19200bps</option>
+						<option value=  "9600">   9600bps</option>
+						<option value=  "4800">   4800bps</option>
+						<option value=  "2400">   2400bps</option>
+						<option value=  "1200">   1200bps</option>
+						<option value=   "300">    300bps</option>
+						<option value=   "110">    110bps</option>
+					</select>
+				</div>
+				<div class="col-sm-3"><button id="connect" class="btn btn-primary">connect</button></div>
+			</div>
+
+			<div class="sendBox">
+				<div class="col-sm-6"><textarea id="sendData" class="form-control input-sm" cols=60 rows=1></textarea></div>
+				<div class="col-sm-3">
+					<select id="sendDataType" class="form-control" class="selectpicker" >
+						<option value="str" selected>String (%s)</option>
+						<option value="char" >Char (%c)</option>
+						<option value="base2" >Base2 (%b)</option>
+						<option value="base10" >Base10 (%d)</option>
+						<option value="base16" >Base16 (%x)</option>
+					</select>
+				</div>
+				<div class="col-sm-3"><button id="sendbtn" class="btn btn-primary">send</button></div>
+			</div>
+
+
+	<!-- 		<div class="log" id="log"></div> -->
+			<div class ="text">
+				<div class="col-sm-12"><textarea id="textbox" class="form-control input-sm" cols=100 rows=30></textarea></div>
+			</div>
+
 		</div>
 
-<!-- 		<div class="log" id="log"></div> -->
-		<div class ="text">
-			<textarea id="textbox" cols=100 rows=30></textarea>
-		</div>
-
-	</div>
-
-		<script src="serial.js"></script>
-</body>
+			<script src="serial.js"></script>
+	</body>
