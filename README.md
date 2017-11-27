@@ -4,9 +4,9 @@
 This is a chrome app that monitors serial communication.
 
 ## Usage
-- Select COM PORT.
-- Push connect.
-- You can show receive message.
+- COM PORTを選ぶ
+- boud rateを設定する
+- "Connect"を押して接続
 
 ## Install
 - projectをdownloadしてきます。
