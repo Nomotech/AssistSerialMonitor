@@ -19,6 +19,15 @@ function convertStringToArrayBuffer(str) {
    return bytes.buffer;
 };
 
+function stringSlices(str, n) {
+  var l = str.length;
+  var result = [];
+  for (var i = 0; i < l; i += n) {
+      result.push(str.slice(i, i + n));
+  }
+  return result;
+}
+
 // ------------------------------------------< Device Load >------------------------------------------
 let loaded = function() {
   console.log('loaded');
@@ -135,23 +144,88 @@ let sendTypeChange = function(info){
 document.getElementById('sendOption').addEventListener("click", sendTypeChange, false);
 
 let checkInput = function(data){
-
-  switch(sendDataType) {
-    case 'str':
+  let form = data.srcElement;
+  let inputData = form.value;
+  let inputArray = [];
+  let str = '';
+  console.log(data)
+  switch(data.target.id) {
+    case 'sendStr':
+      for(let i  = 0 ; i < inputData.length ; i++) {
+        inputArray[i] = inputData.charCodeAt(i);
+      }
       break;
-    case 'base2':
-      data.srcElement.value =data.srcElement.value.replace(/[^0-1]+/g,"");
-    case 'base10':
-      data.srcElement.value =data.srcElement.value.replace(/[^0-9]+/g,"");
-    case 'base16':
-      data.srcElement.value =data.srcElement.value.replace(/[^0-9a-fA-F]+/g,"");
+    case 'sendHex':
+      inputArray = stringSlices(form.value.replace(/[^0-9a-fA-F]+/g,""),2);
+      for(let h of inputArray) str += h + ' ';
+      if(data.key == 'Backspace') str = str.slice( 0, -1);
+      form.value = str;
+      inputArray = inputArray.map(function(x){ return parseInt(x,16); });
+      break;
+    case 'sendDec':
+      inputArray = stringSlices(form.value.replace(/[^0-9]+/g,""),3);
+      for(let i=0 ; i < inputArray.length ; i++){
+        if(Number(inputArray[i]) > 255) inputArray[i] = 255;
+        if(data.key == ' ' && i == inputArray.length - 1) {
+          while(inputArray[i].length < 3) inputArray[i] = '0' + inputArray[i];
+        }
+        str += inputArray[i] + ' ';
+      }
+      if(data.key == 'Backspace') str = str.slice( 0, -1);
+      form.value = str;
+      inputArray = inputArray.map(function(x){ return Number(x); });
+      break;
+    case 'sendBin':
+      inputArray = stringSlices(form.value.replace(/[^0-1]+/g,""),8);
+      for(let i=0 ; i < inputArray.length ; i++){
+        if(data.key == ' ' && i == inputArray.length - 1) {
+          while(inputArray[i].length < 8) inputArray[i] = '0' + inputArray[i];
+        }
+        str += inputArray[i] + ' ';
+      }
+      if(data.key == 'Backspace') str = str.slice( 0, -1);
+      form.value = str;
+      inputArray = inputArray.map(function(x){ return parseInt(x,2); });
+      break;
     default : break;
+
   }
+
+  if(data.target.id != 'sendStr') {
+    str = '';
+    for(let a of inputArray) str += String.fromCharCode(a);
+    //document.getElementById('sendStr').value = str.replace(/[^0-9a-zA-Z]/g,"?");
+    document.getElementById('sendStr').value = str;
+  }
+  if(data.target.id != 'sendHex') {
+    str = '';
+    for(let a of inputArray) str += a.toString(16) + ' ';
+    document.getElementById('sendHex').value = str;
+  }
+  if(data.target.id != 'sendDec') {
+    str = '';
+    for(let a of inputArray) str += a + ' ';
+    document.getElementById('sendDec').value = str;
+  }
+  if(data.target.id != 'sendBin') {
+    str = '';
+    for(let a of inputArray) {
+      a = a.toString(2);
+      while(a.length < 8) a = '0' + a;
+      str += a + ' ';
+    }
+    document.getElementById('sendBin').value = str;
+  }
+  
+  console.log(inputArray)
 }
 document.getElementById('sendStr').addEventListener("keyup", checkInput, false);
+document.getElementById('sendHex').addEventListener("keyup", checkInput, false);
+document.getElementById('sendDec').addEventListener("keyup", checkInput, false);
+document.getElementById('sendBin').addEventListener("keyup", checkInput, false);
 
 let sendData = function() {
-  let data = document.getElementById('sendData').value;
+  let data = document.getElementById('sendStr').value;
   console.log('send: ' + data);
   // let port = e.options[e.selectedIndex].value;
   chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function() {} );
