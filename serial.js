@@ -100,8 +100,6 @@ chrome.serial.onReceive.addListener(receiveData);
 
 
 // ------------------------------------------< Send Data >------------------------------------------
-// onKeyup="this.value=this.value.replace(/[^0-9]+/,'')"
-let sendDataType = 'str';
 let sendTypeChange = function(info){
   let type = info.srcElement.value;
   let sendData = document.getElementById('sendData');
@@ -117,38 +115,19 @@ let sendTypeChange = function(info){
         panel.style.display = "block";
     }
   }
-  // switch(type) {
-  //   case 'str':
-  //     break;
-  //   case 'char':
-  //     /* Toggle between adding and removing the "active" class,
-  //     to highlight the button that controls the panel */
-  //     // this.classList.toggle("active");
-
-  //     /* Toggle between hiding and showing the active panel */
-      
-  //     break;
-  //   case 'base2':
-  //     sendData.value = data.toString(2);
-  //     break;
-  //   case 'base10':
-  //     sendData.value = data.toString(10);
-  //     break;
-  //   case 'base16':
-  //     sendData.value = data.toString(16);
-  //     break;
-  //   default : break;
-  // }
-  // sendDataType = info.srcElement.value; 
 }
 document.getElementById('sendOption').addEventListener("click", sendTypeChange, false);
 
 let checkInput = function(data){
   let form = data.srcElement;
   let inputData = form.value;
+  let num = form.value.length;
   let inputArray = [];
   let str = '';
-  console.log(data)
+  form.focus();
+  let forcus = form.selectionStart;   // 書き始めのカーソルの位置をとっておく
+  
+  // 入力されたデータの処理と、入力formの編集
   switch(data.target.id) {
     case 'sendStr':
       for(let i  = 0 ; i < inputData.length ; i++) {
@@ -158,7 +137,8 @@ let checkInput = function(data){
     case 'sendHex':
       inputArray = stringSlices(form.value.replace(/[^0-9a-fA-F]+/g,""),2);
       for(let h of inputArray) str += h + ' ';
-      if(data.key == 'Backspace') str = str.slice( 0, -1);
+      str = str.slice( 0, -1)
+      //if(data.key == 'Backspace') str = str.slice( 0, -1);
       form.value = str;
       inputArray = inputArray.map(function(x){ return parseInt(x,16); });
       break;
@@ -171,7 +151,8 @@ let checkInput = function(data){
         }
         str += inputArray[i] + ' ';
       }
-      if(data.key == 'Backspace') str = str.slice( 0, -1);
+      str = str.slice( 0, -1)
+      //if(data.key == 'Backspace') str = str.slice( 0, -1);
       form.value = str;
       inputArray = inputArray.map(function(x){ return Number(x); });
       break;
@@ -183,14 +164,15 @@ let checkInput = function(data){
         }
         str += inputArray[i] + ' ';
       }
-      if(data.key == 'Backspace') str = str.slice( 0, -1);
+      str = str.slice( 0, -1) 
+      //if(data.key == 'Backspace') str = str.slice( 0, -1);
       form.value = str;
       inputArray = inputArray.map(function(x){ return parseInt(x,2); });
       break;
     default : break;
-
   }
 
+  // 入力されていないformの内容も更新
   if(data.target.id != 'sendStr') {
     str = '';
     for(let a of inputArray) str += String.fromCharCode(a);
@@ -216,8 +198,10 @@ let checkInput = function(data){
     }
     document.getElementById('sendBin').value = str;
   }
-  
-  console.log(inputArray)
+  //console.log(inputArray);
+  // カーソル位置の調整
+  form.selectionStart = forcus + form.value.length - num; // スペースとかが増えた分の調整
+  form.selectionEnd = form.selectionStart;
 }
 document.getElementById('sendStr').addEventListener("keyup", checkInput, false);
 document.getElementById('sendHex').addEventListener("keyup", checkInput, false);
