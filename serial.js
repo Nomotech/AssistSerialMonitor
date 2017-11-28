@@ -91,6 +91,65 @@ chrome.serial.onReceive.addListener(receiveData);
 
 
 // ------------------------------------------< Send Data >------------------------------------------
+// onKeyup="this.value=this.value.replace(/[^0-9]+/,'')"
+let sendDataType = 'str';
+let sendTypeChange = function(info){
+  let type = info.srcElement.value;
+  let sendData = document.getElementById('sendData');
+  let data = parseInt(sendStr.value);
+  //.toggle("active");
+  if(info.isTrusted) {
+    this.classList.toggle("active");
+    var panel = document.getElementById('soption');
+    //panel.classList.toggle("active");
+    if (panel.style.display === "block") {
+        panel.style.display = "none";
+    } else {
+        panel.style.display = "block";
+    }
+  }
+  // switch(type) {
+  //   case 'str':
+  //     break;
+  //   case 'char':
+  //     /* Toggle between adding and removing the "active" class,
+  //     to highlight the button that controls the panel */
+  //     // this.classList.toggle("active");
+
+  //     /* Toggle between hiding and showing the active panel */
+      
+  //     break;
+  //   case 'base2':
+  //     sendData.value = data.toString(2);
+  //     break;
+  //   case 'base10':
+  //     sendData.value = data.toString(10);
+  //     break;
+  //   case 'base16':
+  //     sendData.value = data.toString(16);
+  //     break;
+  //   default : break;
+  // }
+  // sendDataType = info.srcElement.value; 
+}
+document.getElementById('sendOption').addEventListener("click", sendTypeChange, false);
+
+let checkInput = function(data){
+
+  switch(sendDataType) {
+    case 'str':
+      break;
+    case 'base2':
+      data.srcElement.value =data.srcElement.value.replace(/[^0-1]+/g,"");
+    case 'base10':
+      data.srcElement.value =data.srcElement.value.replace(/[^0-9]+/g,"");
+    case 'base16':
+      data.srcElement.value =data.srcElement.value.replace(/[^0-9a-fA-F]+/g,"");
+    default : break;
+  }
+}
+document.getElementById('sendStr').addEventListener("keyup", checkInput, false);
+
 let sendData = function() {
   let data = document.getElementById('sendData').value;
   console.log('send: ' + data);
@@ -116,3 +175,21 @@ let onReceiveErrorCallback = function(info) {
 }
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
 
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].onclick = function(){
+        /* Toggle between adding and removing the "active" class,
+        to highlight the button that controls the panel */
+        this.classList.toggle("active");
+
+        /* Toggle between hiding and showing the active panel */
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    }
+}

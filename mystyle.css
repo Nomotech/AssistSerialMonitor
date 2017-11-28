@@ -6,12 +6,29 @@ div.content {
 }
 
 div.setting {
-	height:40px;
+	overflow: auto;
 	margin-bottom:10px;
 }
 
-div.text {
-	margin-top: 50px;
+div.sendBox {
+	overflow-y : auto;
+}
+
+div.soption {
+    display: none;
+}
+div.soption.active {
+	display: block;
+}
+
+input.sendData {
+	
+	margin-bottom: 4px;
+}
+
+textarea.receive {
+	margin-top: 10px;
+	padding-top: 10px;
 }
 
 div.log {
@@ -19,4 +36,76 @@ div.log {
   height: 500px;
   background-color: red;
   overflow: scroll;
+}
+
+button.sendOption {
+    background-color: #fff;
+    cursor: pointer;
+    padding: 2px;
+    width: auto;
+    text-align: left;
+    border: none;
+    outline: none;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+button.sendOption.active, button.sendOption:hover {
+    
+}
+/* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+button.accordion.active, button.accordion:hover {
+    background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+}
+
+.soicon1 {
+	-webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+	transform: rotateZ( 0deg ) ;
+	color: #E58BCA;
+}
+
+.soicon2 {
+	-webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+	transform: rotateZ( 90deg ) ;
+	color: #E58BCA;
+}
+
+.sendOption.active .soicon1 {
+	transform: rotateZ( 360deg );
+	color: #428bca;
+}
+.sendOption.active .soicon2 {
+	transform: rotateZ( 360deg );
+	color: #428bca;
 }
