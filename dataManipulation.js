@@ -2,7 +2,8 @@
 function convertArrayBufferToString(buf){
   let bufView = new Uint8Array(buf);
   let encodedString = String.fromCharCode.apply(null, bufView);
-  return decodeURIComponent(escape(encodedString));
+  // return decodeURIComponent(escape(encodedString));
+  return unescape(encodedString);
 }
 
 /* Converts a string to UTF-8 encoding in a Uint8Array; returns the array */
@@ -93,7 +94,11 @@ let sendDataInput = function(data){
   }
   if(data.target.id != 'sendDec') {
     str = '';
-    for(let a of inputArray) str += a + ' ';
+    for(let a of inputArray){
+      a = a.toString();
+      while(a.length < 3) a = '0' + a;
+      str += a + ' ';
+    }
     document.getElementById('sendDec').value = str;
   }
   if(data.target.id != 'sendBin') {
