@@ -1,8 +1,15 @@
+body {
+	overflow: auto;
+}
+
+html, body {
+    overflow-y: visible;
+}
+
 div.content {
 	padding:10px;
 	width:100%;
 	height:100%;
-	overflow: scroll;
 }
 
 div.setting {
