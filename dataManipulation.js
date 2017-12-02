@@ -115,3 +115,25 @@ let sendDataInput = function(data){
   form.selectionStart = forcus + form.value.length - num; // スペースとかが増えた分の調整
   form.selectionEnd = form.selectionStart;
 }
+
+let searchList = [{str:null,color:"hl-FF8484"},{str:null,color:"hl-AAE5FF"}];
+$("#cs1").change(function() {
+  searchList[0].color = $(this).val();
+});
+$("#cs2").change(function() {
+  searchList[1].color = $(this).val();
+});
+$("#searchStr1").keyup(function() {
+	let val =$(this).val().match(/\/(.+)\/(.*)/);
+	searchList[0].str = $(this).val().length > 0 ? (val ? new RegExp(val[1],val[2]) : $(this).val()) : null; 
+});
+$("#searchStr2").keyup(function() {
+	let val =$(this).val().match(/\/(.+)\/(.*)/);
+	searchList[1].str = $(this).val().length > 0 ? (val ? new RegExp(val[1],val[2]) : $(this).val()) : null; 
+});
+function searchHighlight(str){
+	for(let sl of searchList){
+		str = str.replace(sl.str,`<mark class=${sl.color}>$&</mark>`);
+	}
+	return str;
+}
