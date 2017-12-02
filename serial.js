@@ -42,6 +42,24 @@ let onConnectCallback = function(connectionInfo){
 
 
 // ------------------------------------------< Receive Data >------------------------------------------
+let openReceiveOption = function(info){
+  let type = info.srcElement.value;
+  let data = parseInt(sendStr.value);
+  //.toggle("active");
+  if(info.isTrusted) {
+    this.classList.toggle("active");
+    var panel = document.getElementById('roption');
+    //panel.classList.toggle("active");
+    if (panel.style.display === "block") {
+        panel.style.display = "none";
+    } else {
+        panel.style.display = "block";
+    }
+  }
+}
+document.getElementById('receiveOption').addEventListener("click", openReceiveOption, false);
+
+
 let scrollflag = true;
 let receiveData = function(info) {
   let box = document.getElementById('textbox');
@@ -134,3 +152,5 @@ for (i = 0; i < acc.length; i++) {
         }
     }
 }
+
+$('#colorselector').colorselector();

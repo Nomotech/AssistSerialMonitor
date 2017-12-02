@@ -1,3 +1,7 @@
+select {
+  font-family: 'FontAwesome', 'sans-serif';
+}
+
 div.content {
 	padding:10px;
 	width:100%;
@@ -10,6 +14,7 @@ div.setting {
 	margin-bottom:10px;
 }
 
+/* ------------------------------< send >------------------------------*/
 div.sendBox {
 	overflow-y : auto;
 }
@@ -22,20 +27,7 @@ div.soption.active {
 }
 
 input.sendData {
-	
 	margin-bottom: 4px;
-}
-
-textarea.receive {
-	margin-top: 10px;
-	padding-top: 10px;
-}
-
-div.log {
-  width: 500px;
-  height: 500px;
-  background-color: red;
-  overflow: scroll;
 }
 
 button.sendOption {
@@ -108,4 +100,78 @@ div.panel {
 .sendOption.active .soicon2 {
 	transform: rotateZ( 360deg );
 	color: #428bca;
+}
+
+/* ------------------------------< receive >------------------------------*/
+textarea.receive {
+    height:auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+div.receiveBox{
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
+div.roption {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: none;
+}
+div.roption.active {
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+button.receiveOption {
+    background-color: #fff;
+    cursor: pointer;
+    padding: 2px;
+    width: auto;
+    text-align: left;
+    border: none;
+    outline: none;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+button.receiveOption.active, button.receiveOption:hover {
+    
+}
+
+.roicon {
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+    transform: rotateZ( 0deg ) ;
+    color: #E58BCA;
+}
+
+.receiveOption.active .roicon {
+    transform: rotateZ( 360deg );
+    color: #428bca;
+}
+
+div.log {
+  width: 500px;
+  height: 500px;
+  background-color: red;
+  overflow: scroll;
+}
+
+
+
+.color-select {
+    height: 30px;
+    padding-right: 0px;
+    padding-left: 0px;
 }
