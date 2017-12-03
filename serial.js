@@ -17,20 +17,19 @@ let loaded = function() {
 window.addEventListener('load', loaded, false);
 
 let updatePort = function(){
-  //  デバイスをリスト化して、画面に表示する
-  chrome.serial.getDevices(function(devices) {    
-    // port 設定
-    let selection = document.getElementById('port');
-    selection.appendChild(option);
+  // selectにport 設定
+  chrome.serial.getDevices(function(devices) {   
+    $("#port").empty();
     devices.forEach(function(port){
-      let option = document.createElement('option');
-      option.value = port.path;
-      option.text = port.displayName ? port.path + ' (' + port.displayName + ')' : port.path;
-      selection.appendChild(option);
+      let op = (`<option value=${port.path}>
+        ${port.displayName ? port.path + ' (' + port.displayName + ')' : port.path}
+        </option>`);
+      $("#port").append(op);
     });
   });
 }
-document.getElementById('port').addEventListener("click", updatePort, false);
+$('#reload').click(updatePort);
+
 // ------------------------------------------< Click Connect >------------------------------------------
 let clickedConnect = function() {
   let e = document.getElementById('port');

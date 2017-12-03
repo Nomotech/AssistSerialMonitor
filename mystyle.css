@@ -19,6 +19,37 @@ div.setting {
 	margin-bottom:10px;
 }
 
+button.reload {
+	background-color: #fff;
+	cursor: pointer;
+	padding: 2px;
+	width: auto;
+	text-align: left;
+	border: none;
+	outline: none;
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+.reloadicon {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+	transform: rotateZ( 0deg ) ;
+	color: #9E9EBC;
+}
+
+.receiveOption.active .reloadicon {
+	transform: rotateZ( 360deg );
+	color: #428bca;
+}
+
+
 /* ------------------------------< send >------------------------------*/
 div.sendBox {
 	overflow-y : auto;
@@ -162,7 +193,7 @@ button.receiveOption.active, button.receiveOption:hover {
 	-o-transition: all 0.2s;
 	transition: all 0.2s;
 	transform: rotateZ( 0deg ) ;
-	color: #E58BCA;
+	color: #9E9EBC;
 }
 
 .receiveOption.active .roicon {

@@ -28,11 +28,18 @@
 						<option value=   "110">    110bps</option>
 					</select>
 				</div>
-				<div class="col-sm-3"><button id="connect" class="btn btn-primary">Connect</button></div>
+				<div class="col-sm-1">
+					<button type="button" id="reload" class="reload">
+						<span class="fa-stack container">
+							<i class="fa fa-refresh fa-stack-2x reloadicon" aria-hidden="true" id="roicon"></i>
+						</span>
+					</button>
+				</div>
+				<div class="col-sm-2"><button id="connect" class="btn btn-primary">Connect</button></div>
 			</div>
 
 			<div class="sendBox">
-				<div class="col-sm-8"><input type="text" id="sendStr" class="form-control input-sm sendData" ></div>
+				<div class="col-sm-9"><input type="text" id="sendStr" class="form-control input-sm sendData" ></div>
 				<div class="col-sm-1">
 					<button type="button" id="sendOption" class="sendOption">
 						<span class="fa-stack container">
@@ -41,17 +48,17 @@
 						 </span>
 					</button>
 				</div>
-				<div class="col-sm-3"><button id="sendbtn" class="btn btn-primary">Send</button></div>
+				<div class="col-sm-2"><button id="sendbtn" class="btn btn-primary">Send</button></div>
 
 				<div id="soption" class="soption">
-				  <div class="col-sm-8"><input type="text" id="sendHex" class="form-control input-sm sendData" ></div>
-					<div class="col-sm-3"><font color='#428bca' size=3 style="line-height:2.1">Hex</font></div>
+				  <div class="col-sm-9"><input type="text" id="sendHex" class="form-control input-sm sendData" ></div>
+					<div class="col-sm-2"><font color='#428bca' size=3 style="line-height:2.1">Hex</font></div>
 
-					<div class="col-sm-8"><input type="text" id="sendDec" class="form-control input-sm sendData" ></div>
-					<div class="col-sm-3"><font color='#428bca' size=3 style="line-height:2.1">Dec</font></div>
+					<div class="col-sm-9"><input type="text" id="sendDec" class="form-control input-sm sendData" ></div>
+					<div class="col-sm-2"><font color='#428bca' size=3 style="line-height:2.1">Dec</font></div>
 					
-					<div class="col-sm-8"><input type="text" id="sendBin" class="form-control input-sm sendData" ></div>
-					<div class="col-sm-3"><font color='#428bca' size=3 style="line-height:2.1">Bin</font></div>
+					<div class="col-sm-9"><input type="text" id="sendBin" class="form-control input-sm sendData" ></div>
+					<div class="col-sm-2"><font color='#428bca' size=3 style="line-height:2.1">Bin</font></div>
 				</div>
 				<br>
 				<Hr Align="center" Width="90%"> 
@@ -66,7 +73,7 @@
 				<button type="button" id="receiveOption" class="receiveOption">
 					<span class="fa-stack container">
 						<i class="fa fa-cog fa-stack-2x roicon" aria-hidden="true" id="roicon"></i>
-					 </span>
+					</span>
 				</button>
 			</div>
 			<div class="receiveBox">
@@ -113,6 +120,7 @@
 				</div>
 
 				<div class="col-sm-5">
+					<font><i class="fa fa-search" aria-hidden="true"></i> Data Type</font><br>
 					<select id="bitrate" class="form-control" class="selectpicker" >
 						<option value="String" selected> String</option>
 						<option value= "Base16">  Base16</option>
