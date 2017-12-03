@@ -3,6 +3,12 @@ let stringReceived = '';
 let arrayReceived = [];
 
 
+//init
+$(function(){
+  'use strict';
+  $('.color-select').colorselector();
+});
+
 // ------------------------------------------< Device Load >------------------------------------------
 let loaded = function() {
   console.log('loaded');
@@ -12,8 +18,7 @@ window.addEventListener('load', loaded, false);
 
 let updatePort = function(){
   //  デバイスをリスト化して、画面に表示する
-  chrome.serial.getDevices(function(devices) {
-    
+  chrome.serial.getDevices(function(devices) {    
     // port 設定
     let selection = document.getElementById('port');
     selection.appendChild(option);
@@ -46,6 +51,22 @@ let onConnectCallback = function(connectionInfo){
 
 
 // ------------------------------------------< Receive Data >------------------------------------------
+let openReceiveOption = function(info){
+  let type = info.srcElement.value;
+  let data = parseInt(sendStr.value);
+  if(info.isTrusted) {
+    this.classList.toggle("active");
+    var panel = document.getElementById('roption');
+    if (panel.style.display === "block") {
+        panel.style.display = "none";
+    } else {
+        panel.style.display = "block";
+    }
+  }
+}
+document.getElementById('receiveOption').addEventListener("click", openReceiveOption, false);
+
+
 let scrollflag = true;
 let receiveData = function(info) {
   let box = document.getElementById('textbox');
@@ -53,19 +74,20 @@ let receiveData = function(info) {
   
   if (info.connectionId == connectionId && info.data) {
     let str = convertArrayBufferToString(info.data);  // 取得文字列
+    str = searchHighlight(str);
     //console.log(str);
-    let scro = box.scrollHeight - box.scrollTop;  // scroll位置確認
+    // let scro = box.scrollHeight - box.scrollTop;  // scroll位置確認
   
-    // console.log(scro)
-    // auto scroll 判定
-    if(scrollflag && scro > 604) scrollflag = false;
-    else if(!scrollflag && scro < 900) scrollflag = true; 
-    box.value += str;  // textarea に出力
+    // // console.log(scro)
+    // // auto scroll 判定
+    // if(scrollflag && scro > 604) scrollflag = false;
+    // else if(!scrollflag && scro < 900) scrollflag = true; 
+    // box.value += str;  // textarea に出力
     
-    // 出力
-    if(scrollflag) box.scrollTop = box.scrollHeight;
-    //document.getElementById('log').innerHTML += str + "<br>";
-    
+    // // 出力
+    // if(scrollflag) box.scrollTop = box.scrollHeight;
+    let data = $(`<pre>${str}</pre>`);
+    $('#log').append(data); 
   }
 };
 chrome.serial.onReceive.addListener(receiveData);
@@ -102,7 +124,6 @@ document.getElementById('sendBin').addEventListener("keyup", sendDataInput, fals
 let sendData = function() {
   let data = document.getElementById('sendStr').value;
   console.log('send: ' + data);
-  // let port = e.options[e.selectedIndex].value;
   chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function() {} );
 
 }
@@ -129,11 +150,8 @@ var i;
 
 for (i = 0; i < acc.length; i++) {
     acc[i].onclick = function(){
-        /* Toggle between adding and removing the "active" class,
-        to highlight the button that controls the panel */
         this.classList.toggle("active");
 
-        /* Toggle between hiding and showing the active panel */
         var panel = this.nextElementSibling;
         if (panel.style.display === "block") {
             panel.style.display = "none";

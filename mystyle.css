@@ -1,8 +1,17 @@
+html, body {
+	height:100%;
+	overflow-y: visible;
+	user-select: auto;
+}
+
+select {
+  font-family: 'FontAwesome', 'sans-serif';
+}
+
 div.content {
 	padding:10px;
 	width:100%;
 	height:100%;
-	overflow: scroll;
 }
 
 div.setting {
@@ -10,93 +19,87 @@ div.setting {
 	margin-bottom:10px;
 }
 
+/* ------------------------------< send >------------------------------*/
 div.sendBox {
 	overflow-y : auto;
 }
 
 div.soption {
-    display: none;
+	display: none;
 }
 div.soption.active {
 	display: block;
 }
 
 input.sendData {
-	
+	margin-bottom: 4px;    
 	margin-bottom: 4px;
 }
 
 textarea.receive {
-	margin-top: 10px;
-	padding-top: 10px;
-}
-
-div.log {
-  width: 500px;
-  height: 500px;
-  background-color: red;
-  overflow: scroll;
+	/*margin-top: 10px;*/
+	/*padding-top: 10px;*/
 }
 
 button.sendOption {
-    background-color: #fff;
-    cursor: pointer;
-    padding: 2px;
-    width: auto;
-    text-align: left;
-    border: none;
-    outline: none;
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    transition: all 0.2s;
+	background-color: #fff;
+	cursor: pointer;
+	padding: 2px;
+	width: auto;
+	text-align: left;
+	border: none;
+	outline: none;
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
 }
 
 button.sendOption.active, button.sendOption:hover {
-    
+	
 }
 /* Style the buttons that are used to open and close the accordion panel */
 button.accordion {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    transition: 0.4s;
+	background-color: #eee;
+	color: #444;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	text-align: left;
+	border: none;
+	outline: none;
+	transition: 0.4s;
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 button.accordion.active, button.accordion:hover {
-    background-color: #ccc;
+	background-color: #ccc;
 }
 
 /* Style the accordion panel. Note: hidden by default */
 div.panel {
-    padding: 0 18px;
-    background-color: white;
-    display: none;
+	padding: 0 18px;
+	background-color: white;
+	display: none;
 }
 
 .soicon1 {
 	-webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
 	transform: rotateZ( 0deg ) ;
 	color: #E58BCA;
 }
 
 .soicon2 {
 	-webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
 	transform: rotateZ( 90deg ) ;
 	color: #E58BCA;
 }
@@ -109,3 +112,155 @@ div.panel {
 	transform: rotateZ( 360deg );
 	color: #428bca;
 }
+
+
+/* ------------------------------< receive >------------------------------*/
+textarea.receive {
+	height:auto;
+	margin-bottom: 10px;
+}
+
+div.receiveBox{
+	margin-bottom: 10px;
+}
+
+div.roption {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: none;
+}
+div.roption.active {
+
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+button.receiveOption {
+	background-color: #fff;
+	cursor: pointer;
+	padding: 2px;
+	width: auto;
+	text-align: left;
+	border: none;
+	outline: none;
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+button.receiveOption.active, button.receiveOption:hover {
+	
+}
+
+.roicon {
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+	transform: rotateZ( 0deg ) ;
+	color: #E58BCA;
+}
+
+.receiveOption.active .roicon {
+	transform: rotateZ( 360deg );
+	color: #428bca;
+}
+
+div.log {
+	width: 100%;
+  max-width: 700px;
+  height: 500px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #428bca;
+  overflow-y :scroll;
+  margin-bottom: 10px;
+}
+
+.log pre{
+	background-color:#F7FBFF;
+	padding: 0;
+	margin: 0;
+	border-style: none;
+}
+
+.searchHighlight{
+	overflow: visible;
+	height:auto;
+}
+
+input.searchStr {
+	margin-bottom: 4px;    
+	margin-bottom: 4px;
+}
+
+.btn-colorselector {
+  width: 26px !important;
+  height: 26px !important;
+  margin-top: 1px !important;
+}
+
+/* text highlight */
+.hwt-container {
+	display: inline-block;
+	position: relative;
+	overflow: hidden !important;
+	-webkit-text-size-adjust: none !important;
+}
+
+.hwt-backdrop {
+	position: absolute !important;
+	top: 0 !important;
+	right: -99px !important;
+	bottom: 0 !important;
+	left: 0 !important;
+	padding-right: 99px !important;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+}
+
+.hwt-highlights {
+	width: auto !important;
+	height: auto !important;
+	border-color: transparent !important;
+	white-space: pre-wrap !important;
+	word-wrap: break-word !important;
+	color: transparent !important;
+	overflow: hidden !important;
+}
+
+.hwt-input {
+	display: block !important;
+	position: relative !important;
+	margin: 0;
+	padding: 0;
+	border-radius: 0;
+	font: inherit;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+}
+
+.hwt-content {
+	border: 1px solid;
+	background: none transparent !important;
+}
+
+.hwt-content mark {
+	padding: 0 !important;
+	color: inherit;
+}
+
+.hl-FF8484 {background-color: #FF8484 !important; }
+.hl-FFAAAA {background-color: #FFAAAA !important; }
+.hl-FFBA89 {background-color: #FFBA89 !important; }
+.hl-FFF0AA {background-color: #FFF0AA !important; }
+.hl-E9FFAA {background-color: #E9FFAA !important; }
+.hl-ADFFAA {background-color: #ADFFAA !important; }
+.hl-CEFFF8 {background-color: #CEFFF8 !important; }
+.hl-AAE5FF {background-color: #AAE5FF !important; }
+.hl-E7B7FF {background-color: #E7B7FF !important; }
+.hl-C3AFFF {background-color: #C3AFFF !important; }

@@ -1,11 +1,13 @@
 	<!doctype html>
 	<head>
-		<meta charset="UTF-8">
-		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Assist Serial Monitor</title>
-		<link rel="stylesheet" href="bootstrap.min.css">
-		<link rel="stylesheet" href="mystyle.css">
-		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+		<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./mystyle.css">
+		<link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="./bootstrap-colorselector/bootstrap-colorselector.css"/>
+
 	</head>
 	<body>
 		<div class="content">
@@ -56,15 +58,80 @@
 			</div>
 
 
-	<!-- 		<div class="log" id="log"></div> -->
-			<div class ="text">
+			<div class="log" id="log"></div>
+			<!-- <div class ="text">
 				<div class="col-sm-12"><textarea id="textbox" class="form-control input-sm receive" cols=100 rows=30></textarea></div>
+			</div> -->
+			<div class="col-sm-1">
+				<button type="button" id="receiveOption" class="receiveOption">
+					<span class="fa-stack container">
+						<i class="fa fa-cog fa-stack-2x roicon" aria-hidden="true" id="roicon"></i>
+					 </span>
+				</button>
+			</div>
+			<div class="receiveBox">
+				<div class="col-sm-3"><button id="rstop" class="btn btn-primary">stop</button></div>
+				<div class="col-sm-3"><button id="rclear" class="btn btn-primary">clear</button></div>
+				<div class="col-sm-3"><button id="rsave" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> save</button></div>
 			</div>
 
+			<div id="roption" class="roption">
+				<div class="col-sm-6">
+					<font><i class="fa fa-search" aria-hidden="true"></i> 検索</font><br>
+					<div class="searchHighlight" id="searchHighlight">
+						<div class="col-sm-1">
+							<select id="cs1" class="color-select">
+				        <option value="hl-FF8484" data-color="#FF8484"></option>
+				        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
+				        <option value="hl-FFBA89" data-color="#FFBA89"></option>
+				        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
+				        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
+				        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
+				        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
+				        <option value="hl-AAE5FF" data-color="#AAE5FF"></option>
+				        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
+				        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
+				      </select>
+			      </div>
+	      		<div class="col-sm-11"><input type="text" id="searchStr1" class="form-control input-sm searchStr" ></div>
+						<div class="col-sm-1">
+							<select id="cs2" class="color-select">
+				        <option value="hl-FF8484" data-color="#FF8484"></option>
+				        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
+				        <option value="hl-FFBA89" data-color="#FFBA89"></option>
+				        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
+				        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
+				        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
+				        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
+				        <option value="hl-AAE5FF" data-color="#AAE5FF" selected="selected"></option>
+				        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
+				        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
+				      </select>
+			      </div>
+	      		<div class="col-sm-11"><input type="text" id="searchStr2" class="form-control input-sm searchStr" ></div>
+					</div>
+				</div>
 
+				<div class="col-sm-5">
+					<select id="bitrate" class="form-control" class="selectpicker" >
+						<option value="String" selected> String</option>
+						<option value= "Base16">  Base16</option>
+						<option value= "Base10">  Base10</option>
+						<option value= "Base2">  Base2</option>
+					</select>
+				</div>
 
-		</div>
-			<script src="dataManipulation.js"></script>
-			<script src="serial.js"></script>
-			
+				<div class="col-sm-8"><inut type="text" id="sendDec" class="form-control input-sm sendData" ></div>
+				<div class="col-sm-3"><font color='#428bca' size=3 style="line-height:2.1">Dec</font></div>
+				
+				<div class="col-sm-8"><input type="text" id="sendBin" class="form-control input-sm sendData" ></div>
+				<div class="col-sm-3"><font color='#428bca' size=3 style="line-height:2.1">Bin</font></div>
+			</div>
+		</div>	
+
+		<script src="./jquery-1.10.2.min.js"></script> 
+		<script src="./bootstrap/js/bootstrap.min.js"></script>
+		<script src="./bootstrap-colorselector/bootstrap-colorselector.js"></script>
+		<script src="./dataManipulation.js"></script>
+		<script src="./serial.js"></script>
 	</body>
