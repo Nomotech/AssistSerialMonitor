@@ -6,12 +6,17 @@ let arrayReceived = [];
 // ------------------------------------------< Device Load >------------------------------------------
 let loaded = function() {
   console.log('loaded');
+  updatePort();
+};
+window.addEventListener('load', loaded, false);
 
+let updatePort = function(){
   //  デバイスをリスト化して、画面に表示する
   chrome.serial.getDevices(function(devices) {
     
     // port 設定
     let selection = document.getElementById('port');
+    selection.appendChild(option);
     devices.forEach(function(port){
       let option = document.createElement('option');
       option.value = port.path;
@@ -19,9 +24,8 @@ let loaded = function() {
       selection.appendChild(option);
     });
   });
-};
-window.addEventListener('load', loaded, false);
-
+}
+document.getElementById('port').addEventListener("click", updatePort, false);
 // ------------------------------------------< Click Connect >------------------------------------------
 let clickedConnect = function() {
   let e = document.getElementById('port');
@@ -68,7 +72,11 @@ chrome.serial.onReceive.addListener(receiveData);
 
 
 // ------------------------------------------< Send Data >------------------------------------------
-let sendTypeChange = function(info){
+let sendOption = function(info){
+  chrome.serial.getConnections(function(info){console.log(info);});
+  chrome.serial.getDevices(function(info){console.log(info);});
+  chrome.serial.getConnections(function(info){console.log(info);});
+
   let type = info.srcElement.value;
   let sendData = document.getElementById('sendData');
   let data = parseInt(sendStr.value);
@@ -84,7 +92,7 @@ let sendTypeChange = function(info){
     }
   }
 }
-document.getElementById('sendOption').addEventListener("click", sendTypeChange, false);
+document.getElementById('sendOption').addEventListener("click", sendOption, false);
 
 document.getElementById('sendStr').addEventListener("keyup", sendDataInput, false);
 document.getElementById('sendHex').addEventListener("keyup", sendDataInput, false);
