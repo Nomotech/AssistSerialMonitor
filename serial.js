@@ -2,7 +2,6 @@ var connectionId = ''
 let stringReceived = '';
 let arrayReceived = [];
 
-
 //init
 $(function(){
   'use strict';
@@ -31,23 +30,46 @@ let updatePort = function(){
 $('#reload').click(updatePort);
 
 // ------------------------------------------< Click Connect >------------------------------------------
-let clickedConnect = function() {
-  let e = document.getElementById('port');
-  let port = e.options[e.selectedIndex].value;
-  let b = document.getElementById('bitrate');
-  let bitrate = Number(b.options[b.selectedIndex].value);
-  chrome.serial.connect(port, {bitrate: bitrate}, onConnectCallback);
-}
-document.getElementById('connect').addEventListener("click", clickedConnect, false);
 
+$('#connect').on('click', function(){
+  if($('#connect').hasClass('active')){
+      chrome.serial.disconnect(connectionId, onDisconnectCallback);
+  }else{
+    let e = document.getElementById('port');
+    let b = document.getElementById('bitrate');
+    chrome.serial.connect(
+      e.options[e.selectedIndex].value, 
+      {bitrate: Number(b.options[b.selectedIndex].value)}, 
+      onConnectCallback
+    );
+  }
+});
+
+$('#rstop').on('click', function(){
+  console.log('click');
+  chrome.serial.getDevices(function(info){console.log(info)});
+  chrome.serial.getConnections(function(info){console.log(info)});
+  chrome.serial.getInfo(connectionId, function(info){console.log(info)});
+  chrome.serial.getControlSignals(connectionId, function(info){console.log(info)});
+});
 
 
 // ------------------------------------------< On Connect >------------------------------------------
 let onConnectCallback = function(connectionInfo){
-  //  onReceiveイベントでconnectionIdの一致を確認するので、保持しておく
+  //  onReceiveイベントでconnectionIdの一致を確認する
   connectionId = connectionInfo.connectionId;
+  $('#connect').toggleClass('active',true);
+  $('#connect').text('disconnect');
 }
 
+// ------------------------------------------< On Discconect >------------------------------------------
+let onDisconnectCallback = function(result) {
+  if (result) { console.log('disconnected'); }
+  else { console.log('error'); }
+  $('#connect').toggleClass('active',false);
+  $('#connect').text('connect');
+  updatePort();
+}
 
 // ------------------------------------------< Receive Data >------------------------------------------
 let openReceiveOption = function(info){
@@ -128,13 +150,6 @@ let sendData = function() {
 }
 document.getElementById('sendbtn').addEventListener("click", sendData, false);
 
-
-// ------------------------------------------< On Discconect >------------------------------------------
-let onDisconnectCallback = function(result) {
-  if (result) { console.log('disconnected'); }
-  else { console.log('error'); }
-}
-
 // ------------------------------------------< Error >------------------------------------------
 let onReceiveErrorCallback = function(info) {
   console.log('end');
@@ -145,9 +160,7 @@ let onReceiveErrorCallback = function(info) {
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
 
 var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
+for (let i = 0; i < acc.length; i++) {
     acc[i].onclick = function(){
         this.classList.toggle("active");
 
