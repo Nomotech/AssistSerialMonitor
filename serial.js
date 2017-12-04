@@ -63,27 +63,27 @@ let openReceiveOption = function(info){
 document.getElementById('receiveOption').addEventListener("click", openReceiveOption, false);
 
 
-let scrollflag = true;
+let scrollflag = 1; // -1 ... off 0 ... hold 1 ... on
 let receiveData = function(info) {
-  let box = document.getElementById('textbox');
+  let box = document.getElementById('log');
   //console.log('received');
   
   if (info.connectionId == connectionId && info.data) {
     let str = convertArrayBufferToString(info.data);  // 取得文字列
-    str = searchHighlight(str);
-    //console.log(str);
-    // let scro = box.scrollHeight - box.scrollTop;  // scroll位置確認
-  
-    // // console.log(scro)
-    // // auto scroll 判定
-    // if(scrollflag && scro > 604) scrollflag = false;
-    // else if(!scrollflag && scro < 900) scrollflag = true; 
-    // box.value += str;  // textarea に出力
+    str = searchHighlight(str);                       // 文字列検索
     
-    // // 出力
-    // if(scrollflag) box.scrollTop = box.scrollHeight;
+    // auto scroll 判定
+    let scro = $('#log').get(0).scrollHeight - $('#log').scrollTop();
+    if(scrollflag == 1 && scro > 498) scrollflag = 0;           // auto scroll 出るとき
+    else if(scrollflag == 0 && scro > 800) scrollflag = -1;     // 判定ゾーンから抜けるまで
+    else if(scrollflag == -1 && scro < 800) scrollflag = true;  // 判定ゾーンに入ってきたとき
+    
+    // 出力
     let data = $(`<pre>${str}</pre>`);
-    $('#log').append(data); 
+    $('#log').append(data);
+    
+    console.log(scro);
+    if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
   }
 };
 chrome.serial.onReceive.addListener(receiveData);
