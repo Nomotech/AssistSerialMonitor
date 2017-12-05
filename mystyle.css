@@ -15,40 +15,24 @@ div.content {
 }
 
 div.setting {
-	overflow: auto;
+
+	overflow: visible;
 	margin-bottom:10px;
 }
 
 button.reload {
 	background-color: #fff;
 	cursor: pointer;
-	padding: 2px;
+	padding: 2px; 
 	width: auto;
 	text-align: left;
 	border: none;
 	outline: none;
-	-webkit-transition: all 0.2s;
-	-moz-transition: all 0.2s;
-	-ms-transition: all 0.2s;
-	-o-transition: all 0.2s;
-	transition: all 0.2s;
 }
 
 .reloadicon {
-	-webkit-transition: all 0.2s;
-	-moz-transition: all 0.2s;
-	-ms-transition: all 0.2s;
-	-o-transition: all 0.2s;
-	transition: all 0.2s;
-	transform: rotateZ( 0deg ) ;
 	color: #9E9EBC;
 }
-
-.receiveOption.active .reloadicon {
-	transform: rotateZ( 360deg );
-	color: #428bca;
-}
-
 
 /* ------------------------------< send >------------------------------*/
 div.sendBox {
@@ -81,56 +65,20 @@ button.sendOption {
 	border: none;
 	outline: none;
 	-webkit-transition: all 0.2s;
-	-moz-transition: all 0.2s;
-	-ms-transition: all 0.2s;
-	-o-transition: all 0.2s;
-	transition: all 0.2s;
 }
 
 button.sendOption.active, button.sendOption:hover {
 	
 }
-/* Style the buttons that are used to open and close the accordion panel */
-button.accordion {
-	background-color: #eee;
-	color: #444;
-	cursor: pointer;
-	padding: 18px;
-	width: 100%;
-	text-align: left;
-	border: none;
-	outline: none;
-	transition: 0.4s;
-}
-
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-button.accordion.active, button.accordion:hover {
-	background-color: #ccc;
-}
-
-/* Style the accordion panel. Note: hidden by default */
-div.panel {
-	padding: 0 18px;
-	background-color: white;
-	display: none;
-}
 
 .soicon1 {
 	-webkit-transition: all 0.2s;
-	-moz-transition: all 0.2s;
-	-ms-transition: all 0.2s;
-	-o-transition: all 0.2s;
-	transition: all 0.2s;
 	transform: rotateZ( 0deg ) ;
 	color: #E58BCA;
 }
 
 .soicon2 {
 	-webkit-transition: all 0.2s;
-	-moz-transition: all 0.2s;
-	-ms-transition: all 0.2s;
-	-o-transition: all 0.2s;
-	transition: all 0.2s;
 	transform: rotateZ( 90deg ) ;
 	color: #E58BCA;
 }
@@ -219,6 +167,8 @@ div.log {
 	border-style: none;
 }
 
+
+/*-------------------------------------< highlight >-------------------------------------*/
 .searchHighlight{
 	overflow: visible;
 	height:auto;
@@ -295,3 +245,47 @@ input.searchStr {
 .hl-AAE5FF {background-color: #AAE5FF !important; }
 .hl-E7B7FF {background-color: #E7B7FF !important; }
 .hl-C3AFFF {background-color: #C3AFFF !important; }
+
+/*-------------------------------------< animation >-------------------------------------*/
+.spin-icon {
+    color: #9E9EBC;
+    -webkit-animation: spin-icon 0.2s;
+    animation-direction: normal;
+}
+@-webkit-keyframes spin-icon{
+  0% { -webkit-transform :rotateZ(0deg) scale(1.0);}
+  50% {
+  	-webkit-transform :rotateZ(180deg) scale(1.3);
+  	color: #1AD086;
+  }
+  100% { -webkit-transform :rotateZ(360deg) scale(1.0);}
+}
+
+.green-flash {
+    -webkit-animation: green-flash 0.2s;
+    animation-direction: normal;
+}
+@-webkit-keyframes green-flash{
+  0% {}
+  50% {box-shadow:0px 0px 10px 0px #1AD086;}
+  100% {}
+}
+
+.blue-flash {
+    -webkit-animation: blue-flash 0.2s;
+}
+@-webkit-keyframes blueflash{
+  0% {}
+  50% {box-shadow:0px 0px 10px 0px #428bca;}
+  100% {}
+}
+
+.red-flash {
+    -webkit-animation: red-flash 0.2s;
+    animation-direction: normal;
+}
+@-webkit-keyframes redflash{
+  0% {}
+  50% {box-shadow:0px 0px 10px 0px #d01a1a;}
+  100% {}
+}

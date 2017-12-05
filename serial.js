@@ -26,14 +26,25 @@ let updatePort = function(){
       $("#port").append(op);
     });
   });
+  $('#roicon').toggleClass('spin-icon',true);
+  $('#port').toggleClass('green-flash',true);
 }
 $('#reload').click(updatePort);
 
+document.querySelector('#roicon').addEventListener("animationend",function(e){
+    $('#roicon').removeClass(e.animationName);
+});
+
+document.querySelector('#port').addEventListener("animationend",function(e){
+    $('#port').removeClass(e.animationName);
+});
+
 // ------------------------------------------< Click Connect >------------------------------------------
 
-$('#connect').on('click', function(){
+let connectPort = function(){
   if($('#connect').hasClass('active')){
       chrome.serial.disconnect(connectionId, onDisconnectCallback);
+      //$('#port').toggleClass('red-flash',true);
   }else{
     let e = document.getElementById('port');
     let b = document.getElementById('bitrate');
@@ -42,8 +53,14 @@ $('#connect').on('click', function(){
       {bitrate: Number(b.options[b.selectedIndex].value)}, 
       onConnectCallback
     );
+    // $('#port').toggleClass('blue-flash',true);
   }
+}
+$('#connect').on('click', function(){
+  connectPort();
 });
+
+
 
 // ------------------------------------------< On Connect >------------------------------------------
 let onConnectCallback = function(connectionInfo){
@@ -109,23 +126,14 @@ chrome.serial.onReceive.addListener(receiveData);
 
 // ------------------------------------------< Send Data >------------------------------------------
 let sendOption = function(info){
-  chrome.serial.getConnections(function(info){console.log(info);});
-  chrome.serial.getDevices(function(info){console.log(info);});
-  chrome.serial.getConnections(function(info){console.log(info);});
-
   let type = info.srcElement.value;
   let sendData = document.getElementById('sendData');
   let data = parseInt(sendStr.value);
-  //.toggle("active");
   if(info.isTrusted) {
     this.classList.toggle("active");
     var panel = document.getElementById('soption');
-    //panel.classList.toggle("active");
-    if (panel.style.display === "block") {
-        panel.style.display = "none";
-    } else {
-        panel.style.display = "block";
-    }
+    if (panel.style.display === "block") panel.style.display = "none";
+    else panel.style.display = "block";
   }
 }
 document.getElementById('sendOption').addEventListener("click", sendOption, false);
