@@ -25,9 +25,13 @@ let updatePort = function(){
         </option>`);
       $("#port").append(op);
     });
+    $('#roicon').toggleClass('reloadiconAnimation',true);
   });
 }
-$('#reload').click(updatePort);
+$('#reload').click(function(){
+  $('#roicon').toggleClass('reloadiconAnimation',false);
+  updatePort();
+});
 
 // ------------------------------------------< Click Connect >------------------------------------------
 
@@ -44,6 +48,8 @@ $('#connect').on('click', function(){
     );
   }
 });
+
+
 
 // ------------------------------------------< On Connect >------------------------------------------
 let onConnectCallback = function(connectionInfo){
@@ -109,23 +115,14 @@ chrome.serial.onReceive.addListener(receiveData);
 
 // ------------------------------------------< Send Data >------------------------------------------
 let sendOption = function(info){
-  chrome.serial.getConnections(function(info){console.log(info);});
-  chrome.serial.getDevices(function(info){console.log(info);});
-  chrome.serial.getConnections(function(info){console.log(info);});
-
   let type = info.srcElement.value;
   let sendData = document.getElementById('sendData');
   let data = parseInt(sendStr.value);
-  //.toggle("active");
   if(info.isTrusted) {
     this.classList.toggle("active");
     var panel = document.getElementById('soption');
-    //panel.classList.toggle("active");
-    if (panel.style.display === "block") {
-        panel.style.display = "none";
-    } else {
-        panel.style.display = "block";
-    }
+    if (panel.style.display === "block") panel.style.display = "none";
+    else panel.style.display = "block";
   }
 }
 document.getElementById('sendOption').addEventListener("click", sendOption, false);
