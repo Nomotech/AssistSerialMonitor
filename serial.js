@@ -45,29 +45,22 @@ $('#connect').on('click', function(){
   }
 });
 
-$('#rstop').on('click', function(){
-  console.log('click');
-  chrome.serial.getDevices(function(info){console.log(info)});
-  chrome.serial.getConnections(function(info){console.log(info)});
-  chrome.serial.getInfo(connectionId, function(info){console.log(info)});
-  chrome.serial.getControlSignals(connectionId, function(info){console.log(info)});
-});
-
-
 // ------------------------------------------< On Connect >------------------------------------------
 let onConnectCallback = function(connectionInfo){
   //  onReceiveイベントでconnectionIdの一致を確認する
   connectionId = connectionInfo.connectionId;
+  $("#sendbtn").prop("disabled", false);
   $('#connect').toggleClass('active',true);
-  $('#connect').text('disconnect');
+  $('#connect').text('Disconnect');
 }
 
 // ------------------------------------------< On Discconect >------------------------------------------
 let onDisconnectCallback = function(result) {
-  if (result) { console.log('disconnected'); }
-  else { console.log('error'); }
+  if (result) console.log('disconnected'); 
+  else  console.log('error');
+  $("#sendbtn").prop("disabled", true);
   $('#connect').toggleClass('active',false);
-  $('#connect').text('connect');
+  $('#connect').text('Connect');
   updatePort();
 }
 
@@ -159,16 +152,12 @@ let onReceiveErrorCallback = function(info) {
 }
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
 
-var acc = document.getElementsByClassName("accordion");
-for (let i = 0; i < acc.length; i++) {
-    acc[i].onclick = function(){
-        this.classList.toggle("active");
 
-        var panel = this.nextElementSibling;
-        if (panel.style.display === "block") {
-            panel.style.display = "none";
-        } else {
-            panel.style.display = "block";
-        }
-    }
-}
+$('#rstop').on('click', function(){
+  console.log('stop click');
+  // $("#sendbtn").prop("disabled", false);
+  // chrome.serial.getDevices(function(info){console.log(info)});
+  // chrome.serial.getConnections(function(info){console.log(info)});
+  // chrome.serial.getInfo(connectionId, function(info){console.log(info)});
+  // chrome.serial.getControlSignals(connectionId, function(info){console.log(info)});
+});
