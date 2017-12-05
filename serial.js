@@ -26,10 +26,12 @@ let updatePort = function(){
       $("#port").append(op);
     });
     $('#roicon').toggleClass('reloadiconAnimation',true);
+    $('#port').toggleClass('reloadlight',true);
   });
 }
 $('#reload').click(function(){
   $('#roicon').toggleClass('reloadiconAnimation',false);
+  $('#port').toggleClass('reloadlight',false);
   updatePort();
 });
 

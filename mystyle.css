@@ -51,6 +51,22 @@ button.reload {
   }
 }
 
+.reloadlight {
+    -webkit-animation: light 0.2s;
+    animation-direction: normal;
+}
+@-webkit-keyframes light{
+  0% {  	
+  }
+  50% {
+/*  	border-color: #1AD086;*/
+  	/*box-shadow: #1AD086;*/
+  	box-shadow:0px 0px 10px 0px #1AD086;
+  }
+  100% {
+  }
+}
+
 .reloadicon {
 	color: #9E9EBC;
 }
