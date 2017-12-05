@@ -81,46 +81,6 @@ let onDisconnectCallback = function(result) {
   updatePort();
 }
 
-// ------------------------------------------< Receive Data >------------------------------------------
-
-let openReceiveOption = function(info){
-  let type = info.srcElement.value;
-  let data = parseInt(sendStr.value);
-  if(info.isTrusted) {
-    this.classList.toggle("active");
-    var panel = document.getElementById('roption');
-    if (panel.style.display === "block") panel.style.display = "none";
-    else panel.style.display = "block";
-  }
-}
-document.getElementById('receiveOption').addEventListener("click", openReceiveOption, false);
-
-
-let scrollflag = 1; // -1 ... off 0 ... hold 1 ... on
-let receiveData = function(info) {
-  let box = document.getElementById('log');
-  
-  if (info.connectionId == connectionId && info.data) {
-    let str = convertArrayBufferToString(info.data);  // 取得文字列
-    str = searchHighlight(str);                       // 文字列検索
-    
-    // auto scroll 判定
-    let scro = $('#log').get(0).scrollHeight - $('#log').scrollTop();
-    if(scrollflag == 1 && scro > 498) scrollflag = 0;           // auto scroll 出るとき
-    else if(scrollflag == 0 && scro > 800) scrollflag = -1;     // 判定ゾーンから抜けるまで
-    else if(scrollflag == -1 && scro < 800) scrollflag = true;  // 判定ゾーンに入ってきたとき
-    
-    // 出力
-    let data = $(`<pre>${str}</pre>`);
-    $('#log').append(data);
-    
-    console.log(scro);
-    if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
-  }
-};
-chrome.serial.onReceive.addListener(receiveData);
-
-
 // ------------------------------------------< Send Data >------------------------------------------
 let sendOption = function(info){
   let type = info.srcElement.value;
@@ -149,6 +109,53 @@ let sendData = function() {
 document.getElementById('sendbtn').addEventListener("click", sendData, false);
 endAnimation('#sendStr');
 
+// ------------------------------------------< Receive Data >------------------------------------------
+
+let openReceiveOption = function(info){
+  let type = info.srcElement.value;
+  let data = parseInt(sendStr.value);
+  if(info.isTrusted) {
+    this.classList.toggle("active");
+    var panel = document.getElementById('roption');
+    if (panel.style.display === "block") panel.style.display = "none";
+    else panel.style.display = "block";
+  }
+}
+document.getElementById('receiveOption').addEventListener("click", openReceiveOption, false);
+
+
+let scrollflag = 1; // -1 ... off 0 ... hold 1 ... on
+let receiveData = function(info) {
+  let box = document.getElementById('log');
+  
+  if (info.connectionId == connectionId && info.data) {
+    let str = convertArrayBufferToString(info.data);  // 取得文字列
+    str = searchHighlight(str);                       // 文字列検索
+    
+    // auto scroll 判定
+    let scro = $('#log').get(0).scrollHeight - $('#log').scrollTop();
+    if(scrollflag == 1 && scro > 498) scrollflag = 0;           // auto scroll 出るとき
+    else if(scrollflag == 0 && scro > 600) scrollflag = -1;     // 判定ゾーンから抜けるまで
+    else if(scrollflag == -1 && scro < 600) scrollflag = true;  // 判定ゾーンに入ってきたとき
+    
+    // 出力
+    let data = $(`<pre>${str}</pre>`);
+    $('#log').append(data);
+    
+    console.log(scro);
+    if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
+  }
+};
+chrome.serial.onReceive.addListener(receiveData);
+
+// Receive Option
+$('#rclear').on('click', function(){
+  console.log('clear click');
+  $('#log').empty();
+  $('#log').toggleClass('red-flash',true);
+});
+endAnimation('#log');
+
 // ------------------------------------------< Error >------------------------------------------
 let onReceiveErrorCallback = function(info) {
   console.log('end');
@@ -156,6 +163,7 @@ let onReceiveErrorCallback = function(info) {
   let disconnect = chrome.serial.disconnect(connectionId, onDisconnectCallback)
 }
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
+
 
 
 $('#rstop').on('click', function(){
