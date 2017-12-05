@@ -27,9 +27,11 @@ let updatePort = function(){
     });
   });
   $('#roicon').toggleClass('spin-icon',true);
-  $('#port').toggleClass('green-flash',true);
 }
-$('#reload').click(updatePort);
+$('#reload').click(function(){
+  updatePort();
+  $('#port').toggleClass('green-flash',true);
+});
 
 document.querySelector('#roicon').addEventListener("animationend",function(e){
     $('#roicon').removeClass(e.animationName);
@@ -39,12 +41,17 @@ document.querySelector('#port').addEventListener("animationend",function(e){
     $('#port').removeClass(e.animationName);
 });
 
+document.querySelector('#bitrate').addEventListener("animationend",function(e){
+    $('#bitrate').removeClass(e.animationName);
+});
+
 // ------------------------------------------< Click Connect >------------------------------------------
 
 let connectPort = function(){
   if($('#connect').hasClass('active')){
       chrome.serial.disconnect(connectionId, onDisconnectCallback);
-      //$('#port').toggleClass('red-flash',true);
+      $('#port').toggleClass('red-flash',true);
+      $('#bitrate').toggleClass('red-flash',true);
   }else{
     let e = document.getElementById('port');
     let b = document.getElementById('bitrate');
@@ -53,7 +60,8 @@ let connectPort = function(){
       {bitrate: Number(b.options[b.selectedIndex].value)}, 
       onConnectCallback
     );
-    // $('#port').toggleClass('blue-flash',true);
+    $('#port').toggleClass('blue-flash',true);
+    $('#bitrate').toggleClass('blue-flash',true);
   }
 }
 $('#connect').on('click', function(){
