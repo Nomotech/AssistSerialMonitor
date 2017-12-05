@@ -2,7 +2,6 @@ var connectionId = ''
 let stringReceived = '';
 let arrayReceived = [];
 
-
 //init
 $(function(){
   'use strict';
@@ -12,39 +11,58 @@ $(function(){
 // ------------------------------------------< Device Load >------------------------------------------
 let loaded = function() {
   console.log('loaded');
-
-  //  デバイスをリスト化して、画面に表示する
-  chrome.serial.getDevices(function(devices) {    
-    // port 設定
-    let selection = document.getElementById('port');
-    devices.forEach(function(port){
-      let option = document.createElement('option');
-      option.value = port.path;
-      option.text = port.displayName ? port.path + ' (' + port.displayName + ')' : port.path;
-      selection.appendChild(option);
-    });
-  });
+  updatePort();
 };
 window.addEventListener('load', loaded, false);
 
-// ------------------------------------------< Click Connect >------------------------------------------
-let clickedConnect = function() {
-  let e = document.getElementById('port');
-  let port = e.options[e.selectedIndex].value;
-  let b = document.getElementById('bitrate');
-  let bitrate = Number(b.options[b.selectedIndex].value);
-  chrome.serial.connect(port, {bitrate: bitrate}, onConnectCallback);
+let updatePort = function(){
+  // selectにport 設定
+  chrome.serial.getDevices(function(devices) {   
+    $("#port").empty();
+    devices.forEach(function(port){
+      let op = (`<option value=${port.path}>
+        ${port.displayName ? port.path + ' (' + port.displayName + ')' : port.path}
+        </option>`);
+      $("#port").append(op);
+    });
+  });
 }
-document.getElementById('connect').addEventListener("click", clickedConnect, false);
+$('#reload').click(updatePort);
 
+// ------------------------------------------< Click Connect >------------------------------------------
 
+$('#connect').on('click', function(){
+  if($('#connect').hasClass('active')){
+      chrome.serial.disconnect(connectionId, onDisconnectCallback);
+  }else{
+    let e = document.getElementById('port');
+    let b = document.getElementById('bitrate');
+    chrome.serial.connect(
+      e.options[e.selectedIndex].value, 
+      {bitrate: Number(b.options[b.selectedIndex].value)}, 
+      onConnectCallback
+    );
+  }
+});
 
 // ------------------------------------------< On Connect >------------------------------------------
 let onConnectCallback = function(connectionInfo){
-  //  onReceiveイベントでconnectionIdの一致を確認するので、保持しておく
+  //  onReceiveイベントでconnectionIdの一致を確認する
   connectionId = connectionInfo.connectionId;
+  $("#sendbtn").prop("disabled", false);
+  $('#connect').toggleClass('active',true);
+  $('#connect').text('Disconnect');
 }
 
+// ------------------------------------------< On Discconect >------------------------------------------
+let onDisconnectCallback = function(result) {
+  if (result) console.log('disconnected'); 
+  else  console.log('error');
+  $("#sendbtn").prop("disabled", true);
+  $('#connect').toggleClass('active',false);
+  $('#connect').text('Connect');
+  updatePort();
+}
 
 // ------------------------------------------< Receive Data >------------------------------------------
 let openReceiveOption = function(info){
@@ -90,7 +108,11 @@ chrome.serial.onReceive.addListener(receiveData);
 
 
 // ------------------------------------------< Send Data >------------------------------------------
-let sendTypeChange = function(info){
+let sendOption = function(info){
+  chrome.serial.getConnections(function(info){console.log(info);});
+  chrome.serial.getDevices(function(info){console.log(info);});
+  chrome.serial.getConnections(function(info){console.log(info);});
+
   let type = info.srcElement.value;
   let sendData = document.getElementById('sendData');
   let data = parseInt(sendStr.value);
@@ -106,7 +128,7 @@ let sendTypeChange = function(info){
     }
   }
 }
-document.getElementById('sendOption').addEventListener("click", sendTypeChange, false);
+document.getElementById('sendOption').addEventListener("click", sendOption, false);
 
 document.getElementById('sendStr').addEventListener("keyup", sendDataInput, false);
 document.getElementById('sendHex').addEventListener("keyup", sendDataInput, false);
@@ -121,13 +143,6 @@ let sendData = function() {
 }
 document.getElementById('sendbtn').addEventListener("click", sendData, false);
 
-
-// ------------------------------------------< On Discconect >------------------------------------------
-let onDisconnectCallback = function(result) {
-  if (result) { console.log('disconnected'); }
-  else { console.log('error'); }
-}
-
 // ------------------------------------------< Error >------------------------------------------
 let onReceiveErrorCallback = function(info) {
   console.log('end');
@@ -137,18 +152,12 @@ let onReceiveErrorCallback = function(info) {
 }
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
 
-var acc = document.getElementsByClassName("accordion");
-var i;
 
-for (i = 0; i < acc.length; i++) {
-    acc[i].onclick = function(){
-        this.classList.toggle("active");
-
-        var panel = this.nextElementSibling;
-        if (panel.style.display === "block") {
-            panel.style.display = "none";
-        } else {
-            panel.style.display = "block";
-        }
-    }
-}
+$('#rstop').on('click', function(){
+  console.log('stop click');
+  // $("#sendbtn").prop("disabled", false);
+  // chrome.serial.getDevices(function(info){console.log(info)});
+  // chrome.serial.getConnections(function(info){console.log(info)});
+  // chrome.serial.getInfo(connectionId, function(info){console.log(info)});
+  // chrome.serial.getControlSignals(connectionId, function(info){console.log(info)});
+});
