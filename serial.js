@@ -33,17 +33,9 @@ $('#reload').click(function(){
   $('#port').toggleClass('green-flash',true);
 });
 
-document.querySelector('#roicon').addEventListener("animationend",function(e){
-    $('#roicon').removeClass(e.animationName);
-});
-
-document.querySelector('#port').addEventListener("animationend",function(e){
-    $('#port').removeClass(e.animationName);
-});
-
-document.querySelector('#bitrate').addEventListener("animationend",function(e){
-    $('#bitrate').removeClass(e.animationName);
-});
+endAnimation('#roicon');
+endAnimation('#port');
+endAnimation('#bitrate');
 
 // ------------------------------------------< Click Connect >------------------------------------------
 
@@ -97,11 +89,8 @@ let openReceiveOption = function(info){
   if(info.isTrusted) {
     this.classList.toggle("active");
     var panel = document.getElementById('roption');
-    if (panel.style.display === "block") {
-        panel.style.display = "none";
-    } else {
-        panel.style.display = "block";
-    }
+    if (panel.style.display === "block") panel.style.display = "none";
+    else panel.style.display = "block";
   }
 }
 document.getElementById('receiveOption').addEventListener("click", openReceiveOption, false);
@@ -110,7 +99,6 @@ document.getElementById('receiveOption').addEventListener("click", openReceiveOp
 let scrollflag = 1; // -1 ... off 0 ... hold 1 ... on
 let receiveData = function(info) {
   let box = document.getElementById('log');
-  //console.log('received');
   
   if (info.connectionId == connectionId && info.data) {
     let str = convertArrayBufferToString(info.data);  // 取得文字列
@@ -159,16 +147,12 @@ let sendData = function() {
   $('#sendStr').toggleClass('blue-flash',true);
 }
 document.getElementById('sendbtn').addEventListener("click", sendData, false);
-document.querySelector('#sendStr').addEventListener("animationend",function(e){
-    $('#sendStr').removeClass(e.animationName);
-});
-
+endAnimation('#sendStr');
 
 // ------------------------------------------< Error >------------------------------------------
 let onReceiveErrorCallback = function(info) {
   console.log('end');
   console.log(arrayReceived.join(','));
-
   let disconnect = chrome.serial.disconnect(connectionId, onDisconnectCallback)
 }
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
