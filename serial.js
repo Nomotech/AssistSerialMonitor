@@ -82,6 +82,7 @@ let onDisconnectCallback = function(result) {
 }
 
 // ------------------------------------------< Receive Data >------------------------------------------
+
 let openReceiveOption = function(info){
   let type = info.srcElement.value;
   let data = parseInt(sendStr.value);
@@ -147,9 +148,13 @@ let sendData = function() {
   let data = document.getElementById('sendStr').value;
   console.log('send: ' + data);
   chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function() {} );
-
+  $('#sendStr').toggleClass('blue-flash',true);
 }
 document.getElementById('sendbtn').addEventListener("click", sendData, false);
+document.querySelector('#sendStr').addEventListener("animationend",function(e){
+    $('#sendStr').removeClass(e.animationName);
+});
+
 
 // ------------------------------------------< Error >------------------------------------------
 let onReceiveErrorCallback = function(info) {

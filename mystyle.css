@@ -273,8 +273,9 @@ input.searchStr {
 
 .blue-flash {
     -webkit-animation: blue-flash 0.2s;
+    animation-direction: normal;
 }
-@-webkit-keyframes blueflash{
+@-webkit-keyframes blue-flash{
   0% {}
   50% {box-shadow:0px 0px 10px 0px #428bca;}
   100% {}
@@ -284,7 +285,7 @@ input.searchStr {
     -webkit-animation: red-flash 0.2s;
     animation-direction: normal;
 }
-@-webkit-keyframes redflash{
+@-webkit-keyframes red-flash{
   0% {}
   50% {box-shadow:0px 0px 10px 0px #d01a1a;}
   100% {}
