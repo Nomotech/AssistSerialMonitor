@@ -156,6 +156,24 @@ $('#rclear').on('click', function(){
 });
 endAnimation('#log');
 
+
+$('#rsave').on('click', function(){
+  let option = {
+    type: 'saveFile',
+    suggestedName: getDateString() + '.txt',
+    accepts: [ { description: 'Text files (*.txt)',extensions: ['txt']} ],
+    acceptsAllTypes: true
+  };
+  chrome.fileSystem.chooseEntry(option, function(entry){
+    console.log(entry);
+    entry.createWriter(function(writer) {
+      let data = $('#log').text();
+      writer.write(new Blob([data], {type: 'text/plain'}));
+    });
+  });
+});
+
+
 // ------------------------------------------< Error >------------------------------------------
 let onReceiveErrorCallback = function(info) {
   console.log('end');
