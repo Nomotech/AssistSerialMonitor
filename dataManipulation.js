@@ -26,6 +26,7 @@ function stringSlices(str, n) {
   return result;
 }
 
+// ---------------------------------< send data >---------------------------------
 let sendDataInput = function(data){
   let form = data.srcElement;
   let inputData = form.value;
@@ -46,7 +47,6 @@ let sendDataInput = function(data){
       inputArray = stringSlices(form.value.replace(/[^0-9a-fA-F]+/g,""),2);
       for(let h of inputArray) str += h + ' ';
       str = str.slice( 0, -1)
-      //if(data.key == 'Backspace') str = str.slice( 0, -1);
       form.value = str;
       inputArray = inputArray.map(function(x){ return parseInt(x,16); });
       break;
@@ -116,6 +116,45 @@ let sendDataInput = function(data){
   form.selectionEnd = form.selectionStart;
 }
 
+// ---------------------------------< receive data >---------------------------------
+let changeDataType = function(data,type){
+	let byteData = new Uint8Array(data);
+	let str = '';
+	console.log(type);
+	switch(type){
+		case 'Str': 
+			str = String.fromCharCode.apply(null, byteData);
+  		return unescape(str);
+		case 'nHex':
+			str = String.fromCharCode.apply(null, byteData);
+  		str = unescape(str);
+  		return str.replace(/[+-]?\d+/g,function(d){return Number(d).toString(16).toUpperCase();});
+		case 'nBin':
+			str = String.fromCharCode.apply(null, byteData);
+  		str = unescape(str);
+  		return str.replace(/[+-]?\d+/g,function(d){return Number(d).toString(2)});
+		case 'Hex':
+			for(let b of byteData) {
+				if(b == 10 || b == 13) str += '\n';	// 改行文字 
+				else str += ('0' + b.toString(16)).slice( -2 ) + ' ';
+			}
+			return str;
+		case 'Dec':
+			for(let b of byteData) {
+				if(b == 10 || b == 13) str += '\n';
+				else str += ('00' + b).slice( -3 ) + ' ';
+			} 
+			return str;
+		case 'Bin':
+			for(let b of byteData) {
+				if(b == 10 || b == 13) str += '\n';
+				else str += ('0000000' + b.toString(2)).slice( -8 ) + ' ';
+			}
+			return str;
+	}
+}
+
+// ---------------------------------< highlight >---------------------------------
 let searchList = [{str:null,color:"hl-FF8484"},{str:null,color:"hl-AAE5FF"}];
 $("#cs1").change(function() {
   searchList[0].color = $(this).val();
@@ -137,3 +176,4 @@ function searchHighlight(str){
 	}
 	return str;
 }
+

@@ -9,11 +9,6 @@ $(function(){
 });
 
 // ------------------------------------------< Device Load >------------------------------------------
-let loaded = function() {
-  console.log('loaded');
-  updatePort();
-};
-window.addEventListener('load', loaded, false);
 
 let updatePort = function(){
   // selectにport 設定
@@ -32,10 +27,7 @@ $('#reload').click(function(){
   updatePort();
   $('#port').toggleClass('green-flash',true);
 });
-
-endAnimation('#roicon');
-endAnimation('#port');
-endAnimation('#bitrate');
+window.addEventListener('load', updatePort, false);
 
 // ------------------------------------------< Click Connect >------------------------------------------
 
@@ -56,9 +48,7 @@ let connectPort = function(){
     $('#bitrate').toggleClass('blue-flash',true);
   }
 }
-$('#connect').on('click', function(){
-  connectPort();
-});
+$('#connect').on('click',connectPort);
 
 
 
@@ -102,12 +92,11 @@ document.getElementById('sendBin').addEventListener("keyup", sendDataInput, fals
 
 let sendData = function() {
   let data = document.getElementById('sendStr').value;
-  console.log('send: ' + data);
-  chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function() {} );
+  //console.log('send: ' + data);
+  chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function(log) {console.log(log)} );
   $('#sendStr').toggleClass('blue-flash',true);
 }
 document.getElementById('sendbtn').addEventListener("click", sendData, false);
-endAnimation('#sendStr');
 
 // ------------------------------------------< Receive Data >------------------------------------------
 
@@ -125,11 +114,13 @@ document.getElementById('receiveOption').addEventListener("click", openReceiveOp
 
 
 let scrollflag = 1; // -1 ... off 0 ... hold 1 ... on
+let receiveDataType = 'Str';
 let receiveData = function(info) {
   let box = document.getElementById('log');
   
   if (info.connectionId == connectionId && info.data) {
-    let str = convertArrayBufferToString(info.data);  // 取得文字列
+    let str = changeDataType(info.data,receiveDataType);
+    //let str = convertArrayBufferToString(info.data);  // 取得文字列
     str = searchHighlight(str);                       // 文字列検索
     
     // auto scroll 判定
@@ -141,8 +132,6 @@ let receiveData = function(info) {
     // 出力
     let data = $(`<pre>${str}</pre>`);
     $('#log').append(data);
-    
-    console.log(scro);
     if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
   }
 };
@@ -154,8 +143,6 @@ $('#rclear').on('click', function(){
   $('#log').empty();
   $('#log').toggleClass('red-flash',true);
 });
-endAnimation('#log');
-
 
 $('#rsave').on('click', function(){
   let option = {
@@ -170,8 +157,11 @@ $('#rsave').on('click', function(){
       let data = $('#log').text();
       writer.write(new Blob([data], {type: 'text/plain'}));
     });
+    $('#log').toggleClass('green-flash',true);
   });
 });
+
+$('#receiveDataType').change(function(info){receiveDataType = $(this).val();});
 
 
 // ------------------------------------------< Error >------------------------------------------
@@ -182,6 +172,12 @@ let onReceiveErrorCallback = function(info) {
 }
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
 
+// ------------------------------------------< animation >------------------------------------------
+endAnimation('#roicon');
+endAnimation('#port');
+endAnimation('#bitrate');
+endAnimation('#log');
+endAnimation('#sendStr');
 
 
 $('#rstop').on('click', function(){
