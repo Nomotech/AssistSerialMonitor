@@ -94,6 +94,14 @@ let sendData = function() {
   let data = document.getElementById('sendStr').value;
   //console.log('send: ' + data);
   chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function(log) {console.log(log)} );
+  dataObject = $(`<pre class="sendlog">${data}</pre>`);
+  $('#log').append(dataObject);
+
+  if($('#sendlogbtn').hasClass('active')) $('.sendlog').show();
+  else $('.sendlog').hide();
+  
+  if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
+
   $('#sendStr').toggleClass('blue-flash',true);
 }
 document.getElementById('sendbtn').addEventListener("click", sendData, false);
@@ -163,6 +171,18 @@ $('#rsave').on('click', function(){
 
 $('#receiveDataType').change(function(info){receiveDataType = $(this).val();});
 
+
+
+$('#sendlogbtn').on('click',function(){
+  $(this).toggleClass('active');
+  if($(this).hasClass('active')){
+    $(this).text('hide send log');
+    $('.sendlog').show();
+  }else{
+    $(this).text('show send log');
+    $('.sendlog').hide();
+  }
+});
 
 // ------------------------------------------< Error >------------------------------------------
 let onReceiveErrorCallback = function(info) {

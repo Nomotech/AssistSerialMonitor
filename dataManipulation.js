@@ -120,7 +120,6 @@ let sendDataInput = function(data){
 let changeDataType = function(data,type){
 	let byteData = new Uint8Array(data);
 	let str = '';
-	console.log(type);
 	switch(type){
 		case 'Str': 
 			str = String.fromCharCode.apply(null, byteData);

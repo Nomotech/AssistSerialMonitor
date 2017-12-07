@@ -167,6 +167,13 @@ div.log {
 	border-style: none;
 }
 
+.log pre.sendlog{
+	background-color:#FFEDED;
+	padding: 0;
+	margin: 0;
+	border-style: none;
+}
+
 
 /*-------------------------------------< highlight >-------------------------------------*/
 .searchHighlight{
