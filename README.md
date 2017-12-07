@@ -18,3 +18,6 @@ This is a chrome app that monitors serial communication.
 
 ## Author
 [Nomotech](https://github.com/Nomotech)
+
+## 引用License
+https://github.com/lonekorean/highlight-within-textarea/blob/master/LICENSE.md
