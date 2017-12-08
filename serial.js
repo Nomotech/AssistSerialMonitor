@@ -94,12 +94,11 @@ let sendData = function() {
   let data = document.getElementById('sendStr').value;
   //console.log('send: ' + data);
   chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function(log) {console.log(log)} );
-  dataObject = $(`<pre class="sendlog">${data}</pre>`);
+  dataObject = $(`<pre class="ts">time:${Date.now()}</pre><pre class="sendlog">${data}\n</pre>`);
   $('#log').append(dataObject);
 
-  if($('#sendlogbtn').hasClass('active')) $('.sendlog').show();
-  else $('.sendlog').hide();
-  
+  if(!$('#sendlogbtn').hasClass('active')) $('.sendlog').hide();
+  if(!$('#tsbtn').hasClass('active')) $('.ts').hide();
   if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
 
   $('#sendStr').toggleClass('blue-flash',true);
@@ -125,7 +124,7 @@ let scrollflag = 1; // -1 ... off 0 ... hold 1 ... on
 let receiveDataType = 'Str';
 let receiveData = function(info) {
   let box = document.getElementById('log');
-  
+  let ts = Date.now();
   if (info.connectionId == connectionId && info.data) {
     let str = changeDataType(info.data,receiveDataType);
     //let str = convertArrayBufferToString(info.data);  // 取得文字列
@@ -138,14 +137,34 @@ let receiveData = function(info) {
     else if(scrollflag == -1 && scro < 600) scrollflag = true;  // 判定ゾーンに入ってきたとき
     
     // 出力
-    let data = $(`<pre>${str}</pre>`);
+    let data = $(`<pre class='ts'>time:${ts}\n</pre><pre>${str}</pre>`);
     $('#log').append(data);
+    if(!$('#tsbtn').hasClass('active')) $('.ts').hide();
     if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
   }
 };
 chrome.serial.onReceive.addListener(receiveData);
 
 // Receive Option
+$('#rstop').on('click',function(){
+  connectPort();
+  $(this).toggleClass('active');
+  if($(this).hasClass('active')){
+    let data = ('<i class="fa fa-hand-paper-o" aria-hidden="true"></i> Stop');
+    $(this).empty(); $(this).append(data);
+    $('.sendlog').css('display', 'block');
+  }else{
+    let data = ('<i class="fa fa-hand-o-right" aria-hidden="true"></i> Start');
+    $(this).empty(); $(this).append(data);
+    $('.sendlog').hide();
+  }
+});
+
+$('#bottom').on('click', function(){
+  $('#log').scrollTop($('#log').get(0).scrollHeight);
+  scrollflag == -1;
+});
+
 $('#rclear').on('click', function(){
   console.log('clear click');
   $('#log').empty();
@@ -176,12 +195,29 @@ $('#receiveDataType').change(function(info){receiveDataType = $(this).val();});
 $('#sendlogbtn').on('click',function(){
   $(this).toggleClass('active');
   if($(this).hasClass('active')){
-    $(this).text('hide send log');
-    $('.sendlog').show();
+    let data = ('<i class="fa fa-paper-plane" aria-hidden="true"></i> hide send log');
+    $(this).empty(); $(this).append(data);
+    $('.sendlog').css('display', 'block');
   }else{
-    $(this).text('show send log');
+    let data = ('<i class="fa fa-paper-plane" aria-hidden="true"></i> show send log');
+    $(this).empty(); $(this).append(data);
     $('.sendlog').hide();
   }
+  if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
+});
+
+$('#tsbtn').on('click',function(){
+  $(this).toggleClass('active');
+  if($(this).hasClass('active')){
+    let data = ('<i class="fa fa-clock-o" aria-hidden="true"></i> hide timestamp');
+    $(this).empty(); $(this).append(data);
+    $('.ts').css('display', 'block');
+  }else{
+    let data = ('<i class="fa fa-clock-o" aria-hidden="true"></i> show timestamp');
+    $(this).empty(); $(this).append(data);
+    $('.ts').hide();
+  }
+  if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
 });
 
 // ------------------------------------------< Error >------------------------------------------

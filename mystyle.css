@@ -102,6 +102,10 @@ textarea.receive {
 div.receiveBox{
 	margin-bottom: 10px;
 }
+div.receiveBox div{
+	display: inline-block ;
+	margin-left: 10px;
+}
 
 div.roption {
 	margin-top: 10px;
@@ -109,10 +113,16 @@ div.roption {
 	display: none;
 }
 div.roption.active {
-
 	margin-top: 10px;
 	margin-bottom: 10px;
 	display: block;
+}
+
+div.roption1 {
+	overflow: visible;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	
 }
 
 button.receiveOption {
@@ -165,6 +175,7 @@ div.log {
 	padding: 0;
 	margin: 0;
 	border-style: none;
+	display: inline ;
 }
 
 .log pre.sendlog{
@@ -172,6 +183,15 @@ div.log {
 	padding: 0;
 	margin: 0;
 	border-style: none;
+	display: block;
+}
+
+.log pre.ts{
+	background-color:#E6FFDD;
+	padding: 0;
+	margin: 0;
+	border-style: none;
+	display: block; ;
 }
 
 

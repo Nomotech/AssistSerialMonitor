@@ -48,7 +48,7 @@
 						 </span>
 					</button>
 				</div>
-				<div class="col-sm-2"><button id="sendbtn" class="btn btn-primary" disabled="true">Send</button></div>
+				<div class="col-sm-2"><button id="sendbtn" class="btn btn-primary" disabled="true"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send</button></div>
 
 				<div id="soption" class="soption">
 				  <div class="col-sm-9"><input type="text" id="sendHex" class="form-control input-sm sendData" ></div>
@@ -74,60 +74,69 @@
 				</button>
 			</div>
 			<div class="receiveBox">
-				<div class="col-sm-3"><button id="rstop" class="btn btn-primary">stop</button></div>
-				<div class="col-sm-3"><button id="rclear" class="btn btn-primary">clear</button></div>
-				<div class="col-sm-3"><button id="rsave" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> save</button></div>
+				<div><button id="rstop" class="btn btn-primary"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> Stop</button></div>
+				<div><button id="bottom" class="btn btn-primary"><i class="fa fa-arrow-down" aria-hidden="true"></i> To the bottom</button></div>
+				<div><button id="rclear" class="btn btn-primary"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear</button></div>
+				<div><button id="rsave" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button></div>
 				<a id="anchor"></a>
 			</div>
 
 			<div id="roption" class="roption">
-				<div class="col-sm-6">
-					<font><i class="fa fa-search" aria-hidden="true"></i> 検索</font><br>
-					<div class="searchHighlight" id="searchHighlight">
-						<div class="col-sm-1">
-							<select id="cs1" class="color-select">
-				        <option value="hl-FF8484" data-color="#FF8484"></option>
-				        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
-				        <option value="hl-FFBA89" data-color="#FFBA89"></option>
-				        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
-				        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
-				        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
-				        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
-				        <option value="hl-AAE5FF" data-color="#AAE5FF"></option>
-				        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
-				        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
-				      </select>
-			      </div>
-	      		<div class="col-sm-11"><input type="text" id="searchStr1" class="form-control input-sm searchStr" ></div>
-						<div class="col-sm-1">
-							<select id="cs2" class="color-select">
-				        <option value="hl-FF8484" data-color="#FF8484"></option>
-				        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
-				        <option value="hl-FFBA89" data-color="#FFBA89"></option>
-				        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
-				        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
-				        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
-				        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
-				        <option value="hl-AAE5FF" data-color="#AAE5FF" selected="selected"></option>
-				        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
-				        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
-				      </select>
-			      </div>
-	      		<div class="col-sm-11"><input type="text" id="searchStr2" class="form-control input-sm searchStr" ></div>
+				<div class="roption1">
+					<div class="col-sm-6">
+						<font><i class="fa fa-search" aria-hidden="true"></i> 検索</font><br>
+						<div class="searchHighlight" id="searchHighlight">
+							<div class="col-sm-1">
+								<select id="cs1" class="color-select">
+					        <option value="hl-FF8484" data-color="#FF8484"></option>
+					        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
+					        <option value="hl-FFBA89" data-color="#FFBA89"></option>
+					        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
+					        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
+					        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
+					        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
+					        <option value="hl-AAE5FF" data-color="#AAE5FF"></option>
+					        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
+					        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
+					      </select>
+				      </div>
+		      		<div class="col-sm-11"><input type="text" id="searchStr1" class="form-control input-sm searchStr" ></div>
+							<div class="col-sm-1">
+								<select id="cs2" class="color-select">
+					        <option value="hl-FF8484" data-color="#FF8484"></option>
+					        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
+					        <option value="hl-FFBA89" data-color="#FFBA89"></option>
+					        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
+					        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
+					        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
+					        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
+					        <option value="hl-AAE5FF" data-color="#AAE5FF" selected="selected"></option>
+					        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
+					        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
+					      </select>
+				      </div>
+		      		<div class="col-sm-11"><input type="text" id="searchStr2" class="form-control input-sm searchStr" ></div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<font><i class="fa fa-wrench" aria-hidden="true"></i> Data Type</font><br>
+						<select id="receiveDataType" class="form-control" class="selectpicker" >
+							<option value="Str" selected> String</option>
+							<option value= "nHex"> Num to Hex</option>
+							<option value= "nBin"> Num to Bin</option>
+							<option value= "Hex"> Raw data to Hex</option>
+							<option value= "Dec"> Raw data to Dec</option>
+							<option value= "Bin"> Raw data to Bin</option>
+						</select>
 					</div>
 				</div>
-
-				<div class="col-sm-5">
-					<font><i class="fa fa-search" aria-hidden="true"></i> Data Type</font><br>
-					<select id="receiveDataType" class="form-control" class="selectpicker" >
-						<option value="Str" selected> String</option>
-						<option value= "nHex"> Num to Hex</option>
-						<option value= "nBin"> Num to Bin</option>
-						<option value= "Hex"> Raw data to Hex</option>
-						<option value= "Dec"> Raw data to Dec</option>
-						<option value= "Bin"> Raw data to Bin</option>
-					</select>
-					<div class="col-sm-6"><button id="sendlogbtn" class="btn btn-primary">show send log</button></div>
+				<Hr Align="center" Width="90%">
+				<div>
+					<div class="col-sm-6">
+						<div class="col-sm-6"><button id="sendlogbtn" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i> show send log</button></div>
+						<div class="col-sm-6"><button id="tsbtn" class="btn btn-primary"><i class="fa fa-clock-o" aria-hidden="true"></i> show timestamp</button></div>
+					</div>
 				</div>
 			</div>
 		</div>	
