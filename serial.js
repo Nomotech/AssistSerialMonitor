@@ -59,6 +59,7 @@ let onConnectCallback = function(connectionInfo){
   $("#sendbtn").prop("disabled", false);
   $('#connect').toggleClass('active',true);
   $('#connect').text('Disconnect');
+  clickrstop();
 }
 
 // ------------------------------------------< On Discconect >------------------------------------------
@@ -69,156 +70,13 @@ let onDisconnectCallback = function(result) {
   $('#connect').toggleClass('active',false);
   $('#connect').text('Connect');
   updatePort();
+  clickrstop();
 }
 
-// ------------------------------------------< Send Data >------------------------------------------
-let sendOption = function(info){
-  let type = info.srcElement.value;
-  let sendData = document.getElementById('sendData');
-  let data = parseInt(sendStr.value);
-  if(info.isTrusted) {
-    this.classList.toggle("active");
-    var panel = document.getElementById('soption');
-    if (panel.style.display === "block") panel.style.display = "none";
-    else panel.style.display = "block";
-  }
-}
-document.getElementById('sendOption').addEventListener("click", sendOption, false);
-
-document.getElementById('sendStr').addEventListener("keyup", sendDataInput, false);
-document.getElementById('sendHex').addEventListener("keyup", sendDataInput, false);
-document.getElementById('sendDec').addEventListener("keyup", sendDataInput, false);
-document.getElementById('sendBin').addEventListener("keyup", sendDataInput, false);
-
-let sendData = function() {
-  let data = document.getElementById('sendStr').value;
-  //console.log('send: ' + data);
-  chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function(log) {console.log(log)} );
-  dataObject = $(`<pre class="ts">time:${Date.now()}</pre><pre class="sendlog">${data}\n</pre>`);
-  $('#log').append(dataObject);
-
-  if(!$('#sendlogbtn').hasClass('active')) $('.sendlog').hide();
-  if(!$('#tsbtn').hasClass('active')) $('.ts').hide();
-  if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
-
-  $('#sendStr').toggleClass('blue-flash',true);
-}
-document.getElementById('sendbtn').addEventListener("click", sendData, false);
-
-// ------------------------------------------< Receive Data >------------------------------------------
-
-let openReceiveOption = function(info){
-  let type = info.srcElement.value;
-  let data = parseInt(sendStr.value);
-  if(info.isTrusted) {
-    this.classList.toggle("active");
-    var panel = document.getElementById('roption');
-    if (panel.style.display === "block") panel.style.display = "none";
-    else panel.style.display = "block";
-  }
-}
-document.getElementById('receiveOption').addEventListener("click", openReceiveOption, false);
-
-
-let scrollflag = 1; // -1 ... off 0 ... hold 1 ... on
-let receiveDataType = 'Str';
-let receiveData = function(info) {
-  let box = document.getElementById('log');
-  let ts = Date.now();
-  if (info.connectionId == connectionId && info.data) {
-    let str = changeDataType(info.data,receiveDataType);
-    //let str = convertArrayBufferToString(info.data);  // 取得文字列
-    str = searchHighlight(str);                       // 文字列検索
-    
-    // auto scroll 判定
-    let scro = $('#log').get(0).scrollHeight - $('#log').scrollTop();
-    if(scrollflag == 1 && scro > 498) scrollflag = 0;           // auto scroll 出るとき
-    else if(scrollflag == 0 && scro > 600) scrollflag = -1;     // 判定ゾーンから抜けるまで
-    else if(scrollflag == -1 && scro < 600) scrollflag = true;  // 判定ゾーンに入ってきたとき
-    
-    // 出力
-    let data = $(`<pre class='ts'>time:${ts}\n</pre><pre>${str}</pre>`);
-    $('#log').append(data);
-    if(!$('#tsbtn').hasClass('active')) $('.ts').hide();
-    if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
-  }
-};
-chrome.serial.onReceive.addListener(receiveData);
-
-// Receive Option
-$('#rstop').on('click',function(){
-  connectPort();
-  $(this).toggleClass('active');
-  if($(this).hasClass('active')){
-    let data = ('<i class="fa fa-hand-paper-o" aria-hidden="true"></i> Stop');
-    $(this).empty(); $(this).append(data);
-    $('.sendlog').css('display', 'block');
-  }else{
-    let data = ('<i class="fa fa-hand-o-right" aria-hidden="true"></i> Start');
-    $(this).empty(); $(this).append(data);
-    $('.sendlog').hide();
-  }
-});
-
-$('#bottom').on('click', function(){
-  $('#log').scrollTop($('#log').get(0).scrollHeight);
-  scrollflag == -1;
-});
-
-$('#rclear').on('click', function(){
-  console.log('clear click');
-  $('#log').empty();
-  $('#log').toggleClass('red-flash',true);
-});
-
-$('#rsave').on('click', function(){
-  let option = {
-    type: 'saveFile',
-    suggestedName: getDateString() + '.txt',
-    accepts: [ { description: 'Text files (*.txt)',extensions: ['txt']} ],
-    acceptsAllTypes: true
-  };
-  chrome.fileSystem.chooseEntry(option, function(entry){
-    console.log(entry);
-    entry.createWriter(function(writer) {
-      let data = $('#log').text();
-      writer.write(new Blob([data], {type: 'text/plain'}));
-    });
-    $('#log').toggleClass('green-flash',true);
-  });
-});
-
-$('#receiveDataType').change(function(info){receiveDataType = $(this).val();});
-
-
-
-$('#sendlogbtn').on('click',function(){
-  $(this).toggleClass('active');
-  if($(this).hasClass('active')){
-    let data = ('<i class="fa fa-paper-plane" aria-hidden="true"></i> hide send log');
-    $(this).empty(); $(this).append(data);
-    $('.sendlog').css('display', 'block');
-  }else{
-    let data = ('<i class="fa fa-paper-plane" aria-hidden="true"></i> show send log');
-    $(this).empty(); $(this).append(data);
-    $('.sendlog').hide();
-  }
-  if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
-});
-
-$('#tsbtn').on('click',function(){
-  $(this).toggleClass('active');
-  if($(this).hasClass('active')){
-    let data = ('<i class="fa fa-clock-o" aria-hidden="true"></i> hide timestamp');
-    $(this).empty(); $(this).append(data);
-    $('.ts').css('display', 'block');
-  }else{
-    let data = ('<i class="fa fa-clock-o" aria-hidden="true"></i> show timestamp');
-    $(this).empty(); $(this).append(data);
-    $('.ts').hide();
-  }
-  if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
-});
+// --------------------------------< Send Data >--------------------------------
+// send.js
+// -------------------------------< Receive Data >--------------------------------
+// receive.js
 
 // ------------------------------------------< Error >------------------------------------------
 let onReceiveErrorCallback = function(info) {
