@@ -1,153 +1,172 @@
-	<!doctype html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Assist Serial Monitor</title>
+		<!doctype html>
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+			<title>Assist Serial Monitor</title>
 
-		<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="./mystyle.css">
-		<link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="./bootstrap-colorselector/bootstrap-colorselector.css"/>
+			<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" href="./mystyle.css">
+			<link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
+			<link rel="stylesheet" href="./bootstrap-colorselector/bootstrap-colorselector.css"/>
 
-	</head>
-	<body>
-		<div class="content">
-			<h2 style="color:#428bca">Assist Monitor</h1>
-			<div class="setting">
-				<div class="col-sm-6"><select id="port" class="form-control selectpicker ani"></select></div>
-				<div class="col-sm-3">
-					<select id="bitrate" class="form-control" class="selectpicker" >
-						<option value="115200" selected> 115200bps</option>
-						<option value= "57600">  57600bps</option>
-						<option value= "36400">  36400bps</option>
-						<option value= "19200">  19200bps</option>
-						<option value=  "9600">   9600bps</option>
-						<option value=  "4800">   4800bps</option>
-						<option value=  "2400">   2400bps</option>
-						<option value=  "1200">   1200bps</option>
-						<option value=   "300">    300bps</option>
-						<option value=   "110">    110bps</option>
-					</select>
-				</div>
-				<div class="col-xs-1">
-					<button type="button" id="reload" class="reload">
-						<span class="fa-stack container">
-							<i class="fa fa-refresh fa-stack-2x reloadicon ani" aria-hidden="true" id="roicon"></i>
-						</span>
-					</button>
-				</div>
-				<div class="col-xs-2"><button id="connect" class="btn btn-primary" data-toggle="button"> Connect</button></div>
-			</div>
-			<Hr Align="center" Width="0%"> 
-			<div class="sendBox">
-				<div class="col-sm-9"><input type="text" id="sendStr" class="form-control input-sm sendData" ></div>
-				<div class="col-sm-1">
-					<button type="button" id="sendOption" class="sendOption">
-						<span class="fa-stack container">
-							<i class="fa fa-minus fa-stack-2x soicon1" aria-hidden="true" id="soicon"></i>
-							<i class="fa fa-minus fa-stack-2x soicon2" aria-hidden="true" id="soicon"></i>
-						 </span>
-					</button>
-				</div>
-				<div class="col-sm-2"><button id="sendbtn" class="btn btn-primary" disabled="true"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send</button></div>
-
-				<div id="soption" class="soption">
-				  <div class="col-sm-9"><input type="text" id="sendHex" class="form-control input-sm sendData" ></div>
-					<div class="col-sm-2"><font color='#428bca' size=3 style="line-height:2.1">Hex</font></div>
-
-					<div class="col-sm-9"><input type="text" id="sendDec" class="form-control input-sm sendData" ></div>
-					<div class="col-sm-2"><font color='#428bca' size=3 style="line-height:2.1">Dec</font></div>
-					
-					<div class="col-sm-9"><input type="text" id="sendBin" class="form-control input-sm sendData" ></div>
-					<div class="col-sm-2"><font color='#428bca' size=3 style="line-height:2.1">Bin</font></div>
-				</div>
-				<br>
-				<Hr Align="center" Width="90%"> 
-			</div>
-
-
-			<div class="log" id="log"></div>
-			<div class="col-sm-1">
-				<button type="button" id="receiveOption" class="receiveOption">
-					<span class="fa-stack container">
-						<i class="fa fa-cog fa-stack-2x roicon" aria-hidden="true" id="roicon"></i>
-					</span>
-				</button>
-			</div>
-			<div class="receiveBox">
-				<div><button id="rstop" class="btn btn-primary"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> Stop</button></div>
-				<div><button id="bottom" class="btn btn-primary"><i class="fa fa-arrow-down" aria-hidden="true"></i> To the bottom</button></div>
-				<div><button id="rclear" class="btn btn-primary"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear</button></div>
-				<div><button id="rsave" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button></div>
-				<a id="anchor"></a>
-			</div>
-
-			<div id="roption" class="roption">
-				<div class="roption1">
-					<div class="col-sm-6">
-						<font><i class="fa fa-search" aria-hidden="true"></i> 検索</font><br>
-						<div class="searchHighlight" id="searchHighlight">
-							<div class="col-sm-1">
-								<select id="cs1" class="color-select">
-					        <option value="hl-FF8484" data-color="#FF8484"></option>
-					        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
-					        <option value="hl-FFBA89" data-color="#FFBA89"></option>
-					        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
-					        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
-					        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
-					        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
-					        <option value="hl-AAE5FF" data-color="#AAE5FF"></option>
-					        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
-					        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
-					      </select>
-				      </div>
-		      		<div class="col-sm-11"><input type="text" id="searchStr1" class="form-control input-sm searchStr" ></div>
-							<div class="col-sm-1">
-								<select id="cs2" class="color-select">
-					        <option value="hl-FF8484" data-color="#FF8484"></option>
-					        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
-					        <option value="hl-FFBA89" data-color="#FFBA89"></option>
-					        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
-					        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
-					        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
-					        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
-					        <option value="hl-AAE5FF" data-color="#AAE5FF" selected="selected"></option>
-					        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
-					        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
-					      </select>
-				      </div>
-		      		<div class="col-sm-11"><input type="text" id="searchStr2" class="form-control input-sm searchStr" ></div>
-						</div>
-					</div>
-
-					<div class="col-sm-6">
-						<font><i class="fa fa-wrench" aria-hidden="true"></i> Data Type</font><br>
-						<select id="receiveDataType" class="form-control" class="selectpicker" >
-							<option value="Str" selected> String</option>
-							<option value= "nHex"> Num to Hex</option>
-							<option value= "nBin"> Num to Bin</option>
-							<option value= "Hex"> Raw data to Hex</option>
-							<option value= "Dec"> Raw data to Dec</option>
-							<option value= "Bin"> Raw data to Bin</option>
+		</head>
+		<body>
+			<div class="content">
+				<h2 style="color:#428bca">Assist Monitor</h1>
+				<div class="setting">
+					<div class="col-sm-6"><select id="port" class="form-control selectpicker ani"></select></div>
+					<div class="col-sm-3">
+						<select id="bitrate" class="form-control" class="selectpicker" >
+							<option value="115200" selected> 115200bps</option>
+							<option value= "57600">  57600bps</option>
+							<option value= "36400">  36400bps</option>
+							<option value= "19200">  19200bps</option>
+							<option value=  "9600">   9600bps</option>
+							<option value=  "4800">   4800bps</option>
+							<option value=  "2400">   2400bps</option>
+							<option value=  "1200">   1200bps</option>
+							<option value=   "300">    300bps</option>
+							<option value=   "110">    110bps</option>
 						</select>
 					</div>
+					<div class="col-xs-1">
+						<button type="button" id="reload" class="reload">
+							<span class="fa-stack container">
+								<i class="fa fa-refresh fa-stack-2x reloadicon ani" aria-hidden="true" id="rlicon"></i>
+							</span>
+						</button>
+					</div>
+					<div class="col-xs-2"><button id="connect" class="btn btn-primary" data-toggle="button"> Connect</button></div>
 				</div>
-				<Hr Align="center" Width="90%">
-				<div>
-					<div class="col-sm-6">
-						<div class="col-sm-6"><button id="sendlogbtn" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i> show send log</button></div>
-						<div class="col-sm-6"><button id="tsbtn" class="btn btn-primary"><i class="fa fa-clock-o" aria-hidden="true"></i> show timestamp</button></div>
+				<Hr Align="center" Width="0%"> 
+				<div class="sendBox">
+					<div class="col-sm-9"><input type="text" id="sendStr" class="form-control input-sm sendData" ></div>
+					<div class="col-xs-1">
+						<button type="button" id="sendOption" class="sendOption" data-toggle="collapse" href="#soption">
+							<span class="fa-stack container">
+								<i class="fa fa-minus fa-stack-2x soicon1" aria-hidden="true" id="soicon"></i>
+								<i class="fa fa-minus fa-stack-2x soicon2" aria-hidden="true" id="soicon"></i>
+							 </span>
+						</button>
+					</div>
+					<div class="col-xs-2"><button id="sendbtn" class="btn btn-primary" disabled="true"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send</button></div>
+
+					<div id="soption" class="soption collapse">
+					  <div class="col-xs-9"><input type="text" id="sendHex" class="form-control input-sm sendData sop" ></div>
+						<div class="col-xs-2"><font color='#428bca' size=3 style="line-height:2.1">Hex</font></div>
+
+						<div class="col-xs-9"><input type="text" id="sendDec" class="form-control input-sm sendData sop" ></div>
+						<div class="col-xs-2"><font color='#428bca' size=3 style="line-height:2.1">Dec</font></div>
+						
+						<div class="col-xs-9"><input type="text" id="sendBin" class="form-control input-sm sendData sop" ></div>
+						<div class="col-xs-2"><font color='#428bca' size=3 style="line-height:2.1">Bin</font></div>
+					</div>
+					<br>
+					<Hr Align="center" Width="90%"> 
+				</div>
+				<div class="serialMenu">
+					<div class="btn-group" data-toggle="buttons">
+					  <label class="btn btn-primary">
+					    <input type="radio" name="options" id="graphbtn" autocomplete="off"><i class="fa fa-line-chart" aria-hidden="true"></i> graph
+					  </label>
+					  <label class="btn btn-primary  active">
+					    <input type="radio" name="options" id="loggerbtn" autocomplete="off" checked><i class="fa fa-list" aria-hidden="true"></i> logger
+					  </label>
 					</div>
 				</div>
-			</div>
-		</div>	
 
-		<script src="./jquery-1.10.2.min.js"></script> 
-		<script src="./bootstrap/js/bootstrap.min.js"></script>
-		<script src="./bootstrap-colorselector/bootstrap-colorselector.js"></script>
-		<script src="./utility.js"></script>
-		<script src="./dataManipulation.js"></script>
-		<script src="./send.js"></script>
-		<script src="./receive.js"></script>
-		<script src="./animation.js"></script>
-		<script src="./serial.js"></script>
-	</body>
+				<div class="serialMonitor">
+					<div class="serialPlotter col-xs-1">
+						<canvas id="canvas"></canvas>
+					</div>
+					<div class="serialLogger col-xs-1">
+						<div class="log" id="log"></div>
+						<div class="col-sm-1">
+							<button type="button" id="receiveOption" class="receiveOption" >
+								<span class="fa-stack container">
+									<i class="fa fa-cog fa-stack-2x roicon" aria-hidden="true" id="roicon"></i>
+								</span>
+							</button>
+						</div>
+						<div class="receiveBox col-sm-11">
+							<div><button id="rstop" class="btn btn-primary"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> Stop</button></div>
+							<div><button id="bottom" class="btn btn-primary"><i class="fa fa-arrow-down" aria-hidden="true"></i> To the bottom</button></div>
+							<div><button id="rclear" class="btn btn-primary"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear</button></div>
+							<div><button id="rsave" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button></div>
+							<a id="anchor"></a>
+						</div>
+
+						<div id="roption" class="roption collapse container-fluid">
+							<div class="roption1 row">
+								<div class="col-sm-6">
+									<div class="row">
+										<font><i class="fa fa-search" aria-hidden="true"></i> 検索</font><br>
+										<div class="searchHighlight" id="searchHighlight">
+											<div class="col-xs-1">
+												<select id="cs1" class="color-select">
+									        <option value="hl-FF8484" data-color="#FF8484"></option>
+									        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
+									        <option value="hl-FFBA89" data-color="#FFBA89"></option>
+									        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
+									        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
+									        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
+									        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
+									        <option value="hl-AAE5FF" data-color="#AAE5FF"></option>
+									        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
+									        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
+									      </select>
+								      </div>
+						      		<div class="col-xs-11"><input type="text" id="searchStr1" class="form-control input-sm searchStr" ></div>
+											<div class="col-xs-1">
+												<select id="cs2" class="color-select">
+									        <option value="hl-FF8484" data-color="#FF8484"></option>
+									        <option value="hl-FFAAAA" data-color="#FFAAAA"></option>
+									        <option value="hl-FFBA89" data-color="#FFBA89"></option>
+									        <option value="hl-FFF0AA" data-color="#FFF0AA"></option>
+									        <option value="hl-E9FFAA" data-color="#E9FFAA"></option>
+									        <option value="hl-ADFFAA" data-color="#ADFFAA"></option>
+									        <option value="hl-CEFFF8" data-color="#CEFFF8"></option>
+									        <option value="hl-AAE5FF" data-color="#AAE5FF" selected="selected"></option>
+									        <option value="hl-E7B7FF" data-color="#E7B7FF"></option>
+									        <option value="hl-C3AFFF" data-color="#C3AFFF"></option>
+									      </select>
+								      </div>
+						      		<div class="col-xs-11"><input type="text" id="searchStr2" class="form-control input-sm searchStr" ></div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-6">
+									<font><i class="fa fa-wrench" aria-hidden="true"></i> Data Type</font><br>
+									<select id="receiveDataType" class="form-control" class="selectpicker" >
+										<option value="Str" selected> String</option>
+										<option value= "nHex"> Num to Hex</option>
+										<option value= "nBin"> Num to Bin</option>
+										<option value= "Hex"> Raw data to Hex</option>
+										<option value= "Dec"> Raw data to Dec</option>
+										<option value= "Bin"> Raw data to Bin</option>
+									</select>
+								</div>
+							</div>
+							<Hr Align="center" Width="90%">
+							<div class="roption2">
+								<div class="col-sm-8 col-md-12">
+									<div><button id="sendlogbtn" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i> show send log</button></div>
+									<div><button id="tsbtn" class="btn btn-primary"><i class="fa fa-clock-o" aria-hidden="true"></i> show timestamp</button></div>
+									<div><label class="checkbox-inline"><input type="checkbox" value=""><i class="fa fa-floppy-o" aria-hidden="true"></i> Auto save</label></div>
+								</div>
+							</div>
+						</div>
+					</dir>
+				</div>
+			</div>	
+
+			<script src="./jquery-1.10.2.min.js"></script> 
+			<script src="./bootstrap/js/bootstrap.min.js"></script>
+			<script src="./bootstrap-colorselector/bootstrap-colorselector.js"></script>
+			<script src="./utility.js"></script>
+			<script src="./dataManipulation.js"></script>
+			<script src="./send.js"></script>
+			<script src="./receive.js"></script>
+			<script src="./animation.js"></script>
+			<script src="./serial.js"></script>
+		</body>

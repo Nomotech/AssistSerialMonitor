@@ -4,9 +4,6 @@ let sendOption = function(info){
   let data = parseInt(sendStr.value);
   if(info.isTrusted) {
     this.classList.toggle("active");
-    var panel = document.getElementById('soption');
-    if (panel.style.display === "block") panel.style.display = "none";
-    else panel.style.display = "block";
   }
 }
 document.getElementById('sendOption').addEventListener("click", sendOption, false);

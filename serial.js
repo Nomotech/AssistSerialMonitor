@@ -21,7 +21,7 @@ let updatePort = function(){
       $("#port").append(op);
     });
   });
-  $('#roicon').toggleClass('spin-icon',true);
+  $('#rlicon').toggleClass('spin-icon',true);
 }
 $('#reload').click(function(){
   updatePort();
@@ -87,18 +87,34 @@ let onReceiveErrorCallback = function(info) {
 chrome.serial.onReceiveError.addListener(onReceiveErrorCallback);
 
 // ------------------------------------------< animation >------------------------------------------
-endAnimation('#roicon');
+endAnimation('#rlicon');
 endAnimation('#port');
 endAnimation('#bitrate');
 endAnimation('#log');
 endAnimation('#sendStr');
 
 
-$('#rstop').on('click', function(){
-  console.log('stop click');
+$('#graphbtn').on('change', function(val){
+  console.log(val);
+  window.resizeTo(1500,1000);
+  $('.serialLogger').toggleClass('widelogger');
+  $('.serialPlotter').toggleClass('wideplotter');
   // $("#sendbtn").prop("disabled", false);
   // chrome.serial.getDevices(function(info){console.log(info)});
   // chrome.serial.getConnections(function(info){console.log(info)});
   // chrome.serial.getInfo(connectionId, function(info){console.log(info)});
   // chrome.serial.getControlSignals(connectionId, function(info){console.log(info)});
 });
+
+$('#loggerbtn').on('change', function(val){
+  console.log(val);
+  window.resizeTo(800,1000);
+  $('.serialLogger').toggleClass('widelogger');
+  $('.serialPlotter').toggleClass('wideplotter');
+  // $("#sendbtn").prop("disabled", false);
+  // chrome.serial.getDevices(function(info){console.log(info)});
+  // chrome.serial.getConnections(function(info){console.log(info)});
+  // chrome.serial.getInfo(connectionId, function(info){console.log(info)});
+  // chrome.serial.getControlSignals(connectionId, function(info){console.log(info)});
+});
+

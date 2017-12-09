@@ -4,7 +4,7 @@ let openReceiveOption = function(info){
   let data = parseInt(sendStr.value);
   if(info.isTrusted) {
     this.classList.toggle("active");
-    var panel = document.getElementById('roption');
+    let panel = document.getElementById('roption');
     if (panel.style.display === "block") panel.style.display = "none";
     else panel.style.display = "block";
   }
