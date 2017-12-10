@@ -286,7 +286,7 @@ input.searchStr {
 
 .line.active {
 	transform: scale(1.0);
-	width: 320px;
+	width: 800px;
 	height: 320px;
 }
 
@@ -300,8 +300,8 @@ input.searchStr {
 
 .bar.active {
 	transform: scale(1.0);
-	width: 320px;
-	height: 320px;
+	width: 400px;
+	height: 400px;
 }
 
 .pi {
@@ -314,8 +314,8 @@ input.searchStr {
 
 .pi.active {
 	transform: scale(1.0);
-	width: 320px;
-	height: 320px;
+	width: 400px;
+	height: 400px;
 }
 
 
