@@ -76,7 +76,25 @@
 
 				<div class="serialMonitor">
 					<div class="serialPlotter col-xs-1">
-						<canvas id="canvas"></canvas>
+						<div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-primary">
+						    <input type="checkbox" id="mapbtn" autocomplete="off"><i class="fa fa-paper-plane" aria-hidden="true"></i> Map
+						  </label>
+						  <label class="btn btn-primary">
+						    <input type="checkbox" id="linebtn" autocomplete="off"><i class="fa fa-line-chart" aria-hidden="true"></i> Line chart
+						  </label>
+						  <label class="btn btn-primary">
+						    <input type="checkbox" id="barbtn" autocomplete="off"><i class="fa fa-bar-chart" aria-hidden="true"></i> Bar chart
+						  </label>
+						  <label class="btn btn-primary">
+						    <input type="checkbox" id="pibtn" autocomplete="off"><i class="fa fa-pie-chart" aria-hidden="true"></i> Pi Chart
+						  </label>
+						</div>
+						<br>
+						<div class="map graphdiv"><canvas class="mapcan" width="601px" height="601px"></canvas></div>
+						<div class="line graphdiv"><canvas class="linecan" width="300px" height="300px"></canvas></div>
+						<div class="bar graphdiv"><canvas class="barcan" width="300px" height="300px"></canvas></div>
+						<div class="pi graphdiv"><canvas class="pican" width="300px" height="300px"></canvas></div>
 					</div>
 					<div class="serialLogger col-xs-1">
 						<div class="log" id="log"></div>
@@ -163,10 +181,13 @@
 			<script src="./jquery-1.10.2.min.js"></script> 
 			<script src="./bootstrap/js/bootstrap.min.js"></script>
 			<script src="./bootstrap-colorselector/bootstrap-colorselector.js"></script>
+			<script src="./ease.js"></script>
 			<script src="./utility.js"></script>
 			<script src="./dataManipulation.js"></script>
 			<script src="./send.js"></script>
 			<script src="./receive.js"></script>
+			<script src="./draw.js"></script>
+			<script src="./graph.js"></script>
 			<script src="./animation.js"></script>
 			<script src="./serial.js"></script>
 		</body>
