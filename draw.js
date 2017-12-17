@@ -37,11 +37,12 @@ function drawText(x,y,text,stroke,fill,font,baseline,ctx){
   if (stroke == null) stroke="rgba(0,0,0,1)";
   if (fill == null) fill="rgba(0,0,0,0)";
   if (ctx == null) ctx=canvas.getContext('2d');
+  if (baseline == null) baseline = "middle";
   if (font == null) font = "28px 'Monotype Corsiva'";
   ctx.fillStyle = fill;
   ctx.strokeStyle = stroke;
   ctx.font = font;
-  ctx.textBaseline = "middle";
+  ctx.textBaseline = baseline;
   ctx.fillText(text,x,y);
 }
 

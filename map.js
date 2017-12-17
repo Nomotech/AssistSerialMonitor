@@ -9,6 +9,8 @@ let center = {x:width/2,y:height/2}
 let span = 20;
 let zoom = 1.0;
 let preZoom = zoom;
+let mouse = {x:0,y:0};
+let focus = {x:0,y:0};
 
 let createMap = function(){
   let ease;
@@ -24,7 +26,7 @@ let createMap = function(){
         if(t < i_ * easeoffset) ease = 0;
         else if(t < i_ * easeoffset + easetime) ease = easeInOutExpo((t - i_ * easeoffset)/easetime);
         else ease = 1;
-        let stroke = (i == 0) ? "rgba(0,100,255,1.0)" : "rgba(100,210,255,0.6)";
+        let stroke = (i == 0) ? "rgba(0,0,255,1.0)" : (i%5 == 0) ? "rgba(50,100,255,0.6)": "rgba(100,210,255,0.6)";
         drawLine(bgctx, {x:canvas.width/2 + i * span ,y:0}, {x:canvas.width/2 + i * span,y:canvas.height * ease}, 1, stroke);
         drawLine(bgctx, {x:canvas.width/2 - i * span ,y:0}, {x:canvas.width/2 - i * span,y:canvas.height * ease}, 1, stroke);
       }
@@ -34,7 +36,7 @@ let createMap = function(){
         if(t < i_ * easeoffset) ease = 0;
         else if(t < i_ * easeoffset + easetime) ease = easeInOutExpo((t - i_ * easeoffset)/easetime);
         else ease = 1;
-        let stroke = (i == 0) ? "rgba(0,100,255,1.0)" : "rgba(100,210,255,0.6)";
+        let stroke = (i == 0) ? "rgba(0,0,255,1.0)" : (i%5 == 0) ? "rgba(50,100,255,0.6)": "rgba(100,210,255,0.6)";
         drawLine(bgctx, {x : 0, y: canvas.height/2 + i * span}, {x : canvas.width * ease, y : canvas.height/2 + i * span}, 1, stroke);
         drawLine(bgctx, {x : 0, y: canvas.height/2 - i * span}, {x : canvas.width * ease, y : canvas.height/2 - i * span}, 1, stroke);
       }
@@ -47,30 +49,45 @@ let createMap = function(){
 let drawMap = function(){
   console.log("drawMap");
   clearCanvas('.mapbg');
-  for(let i = 0; i <= canvas.width/span/2; i++){
-    let stroke = (i == 0) ? "rgba(0,100,255,1.0)" : "rgba(100,210,255,0.1)";
-    drawLine(bgctx, {x:center.x + i * span ,y:0}, {x:center.x + i * span,y:canvas.height}, 1, stroke);
-    drawLine(bgctx, {x:center.x - i * span ,y:0}, {x:center.x - i * span,y:canvas.height}, 1, stroke);
+  let i = 0;
+  let a;
+  
+  while(1){ // draw right
+    a = center.x + i * span;
+    if(a > width){ i = 0; break; }
+    else if(a > 0){
+      let stroke = (i == 0) ? "rgba(0,0,255,1.0)" : (i%5 == 0) ? "rgba(50,100,255,0.6)": "rgba(100,210,255,0.6)";
+      drawLine(bgctx, {x:a ,y:0}, {x:a ,y:canvas.height}, 1, stroke);
+    }
+    i++;
   }
-  for(let i = 0; i <= canvas.height/span/2; i++){
-    let stroke = (i == 0) ? "rgba(0,100,255,1.0)" : "rgba(100,210,255,0.1)";
-    drawLine(bgctx, {x : 0, y: center.x + i * span}, {x : width, y : center.y + i * span}, 1, stroke);
-    drawLine(bgctx, {x : 0, y: center.x - i * span}, {x : width, y : center.y - i * span}, 1, stroke);
+  while(1){ // draw left
+    a = center.x - i * span;
+    if(a < 0){ i = 0; break; }
+    else if(a < width){
+      let stroke = (i == 0) ? "rgba(0,0,255,1.0)" : (i%5 == 0) ? "rgba(50,100,255,0.6)": "rgba(100,210,255,0.6)";
+      drawLine(bgctx, {x:a ,y:0}, {x:a ,y:canvas.height}, 1, stroke);
+    }
+    i++;
   }
-}
-
-// 45 * Math.PI / 180 
-let drawTarget = function(t){
-  let r = 20;
-  ctx.fillStyle = t.fill;
-  ctx.strokeStyle = t.stroke;
-  ctx.beginPath();
-  ctx.moveTo(center.x + t.x + r * Math.cos(90 * Math.PI / 180 + t.t)  , center.y - t.y - r * Math.sin(90 * Math.PI / 180 + t.t));
-  ctx.lineTo(center.x + t.x + r * Math.cos(230 * Math.PI / 180 + t.t) , center.y - t.y - r * Math.sin(230 * Math.PI / 180 + t.t));
-  ctx.lineTo(center.x + t.x + r * Math.cos(310 * Math.PI / 180 + t.t) , center.y - t.y - r * Math.sin(310 * Math.PI / 180 + t.t));
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
+  while(1){ // draw over
+    a = center.y + i * span;
+    if(a > height){ i = 0; break; }
+    else if(a > 0){
+      let stroke = (i == 0) ? "rgba(0,0,255,1.0)" : (i%5 == 0) ? "rgba(50,100,255,0.6)": "rgba(100,210,255,0.6)";
+      drawLine(bgctx, {x : 0, y: a}, {x : width, y : a}, 1, stroke);
+    }
+    i++;
+  }
+  while(1){ // draw under
+    a = center.y - i * span;
+    if(a < 0){ i = 0; break; }
+    else if(a < height){
+      let stroke = (i == 0) ? "rgba(0,0,255,1.0)" : (i%5 == 0) ? "rgba(50,100,255,0.6)": "rgba(100,210,255,0.6)";
+      drawLine(bgctx, {x : 0, y: a}, {x : width, y : a}, 1, stroke);
+    }
+    i++;
+  }
 }
 
 class Target {
@@ -89,6 +106,27 @@ class Target {
   }
 }
 
+// 45 * Math.PI / 180 
+let drawTarget = function(t){
+  let r = 20;
+  ctx.fillStyle = t.fill;
+  ctx.strokeStyle = t.stroke;
+  ctx.beginPath();
+  ctx.moveTo(center.x + t.x * zoom + r * Math.cos(90 * Math.PI / 180 + t.t)  , center.y - t.y * zoom - r * Math.sin(90 * Math.PI / 180 + t.t));
+  ctx.lineTo(center.x + t.x * zoom + r * Math.cos(230 * Math.PI / 180 + t.t) , center.y - t.y * zoom - r * Math.sin(230 * Math.PI / 180 + t.t));
+  ctx.lineTo(center.x + t.x * zoom + r * Math.cos(310 * Math.PI / 180 + t.t) , center.y - t.y * zoom - r * Math.sin(310 * Math.PI / 180 + t.t));
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  drawText(center.x + t.x * zoom,center.y - t.y * zoom,`(${t.x},${t.y})`,t.stroke,t.stroke,"20px 'Monotype Corsiva'",null,ctx); 
+}
+
+let drawMouse = function(){
+  drawCircle(mouse.x,mouse.y,5,"rgba(255,80,80,1.0)",null,null,null,ctx);
+  drawText(mouse.x + 10,mouse.y - 10,`(${focus.x.toFixed(2)},${focus.y.toFixed(2)})`,"rgba(255,80,80,1.0)","rgba(255,80,80,1.0)","20px 'Monotype Corsiva'",null,ctx);
+
+}
+
 let mapDataUpload = function(str){
   let val;
   val = str.match(/r:(.+):(.+):(.+)/);
@@ -99,7 +137,6 @@ let mapDataUpload = function(str){
   if(val) targetList[2].updatePos(Number(val[1]),Number(val[2]),Number(val[3]));
   val = str.match(/g:(.+):(.+):(.+)/);
   if(val) targetList[3].updatePos(Number(val[1]),Number(val[2]),Number(val[3]));
-
 }
 
 let i = 0;
@@ -159,23 +196,49 @@ targetList.push(new Target("rgba(0,100,255,1.0)","rgba(0,100,255,0.5)"));
 targetList.push(new Target("rgba(255,200,80,1.0)","rgba(255,200,80,0.5)"));
 targetList.push(new Target("rgba(100,255,120,1.0)","rgba(100,255,120,0.5)"));
 console.log(targetList)
-function animationMap() {
-  if(mapFlag) {
-    
-    requestAnimationFrame(animationMap);
-    update();
-    clearCanvas('.mapcan');
-    for(let t of targetList) drawTarget(t);
-    // drawTarget(100,100,0);
-    // drawTarget(100 * Math.cos(90 * Math.PI / 180),100 * Math.sin(90 * Math.PI / 180),i);
-    // drawTarget(100 * Math.cos(i),100 * Math.sin(i),i);
-    if(preZoom!=zoom) drawMap();
-  } 
-}
 
-function no_scroll(){
-  
-}
+
 
 let scroll_event = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
-$('.mapcanvas').on(scroll_event,function(e){e.preventDefault();});
+$('.mapcanvas').on(scroll_event,function(e){
+  e.preventDefault();
+  zoom += e.originalEvent.deltaY/1000;
+  if(zoom < 0.01) zoom = 0.01;
+  if(zoom > 100) zoom = 100.0;
+  span = 20 * zoom;
+  while(span < 10) span *= 5;
+  center.x = mouse.x - focus.x * zoom;
+  center.y = mouse.y - focus.y * zoom;
+});
+
+let isMapDrag = false;
+$('.mapcanvas').on('mousedown',function(e){
+    isMapDrag = true;
+}).on('mousemove',function(e){
+  if(isMapDrag){
+    center.x += e.originalEvent.movementX;
+    center.y += e.originalEvent.movementY;
+  }
+  mouse.x = e.originalEvent.offsetX;
+  mouse.y = e.originalEvent.offsetY;
+  focus.x = (mouse.x - center.x) / zoom;
+  focus.y = (mouse.y - center.y) / zoom;
+}).on('mouseout',function(e){
+  isMapDrag = false;
+}).on('mouseup',function(e){
+  isMapDrag = false;
+});
+
+function animationMap() {
+  if(mapFlag) {
+    requestAnimationFrame(animationMap);
+    clearCanvas('.mapcan');
+    if(preZoom!=zoom || isMapDrag) {
+      drawMap();
+      console.log('change map')
+    }
+    for(let t of targetList) drawTarget(t);
+    drawMouse();
+    update();
+  } 
+}
