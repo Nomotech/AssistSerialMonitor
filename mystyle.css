@@ -254,11 +254,15 @@ input.searchStr {
 /*-------------------------------------< ploter >-------------------------------------*/
 .serialPlotter canvas{
 	margin:10px;
+	position: absolute;
 }
 
 .graphdiv{
 	display :inline-block;
 	border: solid 1px rgba(120,180,255,1);
+}
+.graphdiv div{
+	position: relative;
 }
 
 .map {
@@ -272,7 +276,7 @@ input.searchStr {
 
 .map.active {
 	transform: scale(1.0);
-	width: 620px;
+	width: 800px;
 	height: 620px;
 }
 

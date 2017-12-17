@@ -28,11 +28,19 @@ let receiveData = function(info) {
     else if(scrollflag == 0 && scro > 600) scrollflag = -1;     // 判定ゾーンから抜けるまで
     else if(scrollflag == -1 && scro < 600) scrollflag = true;  // 判定ゾーンに入ってきたとき
     
+    //graph
+    if($('.map').hasClass('active')) {
+      mapDataUpload(str);
+      // $('.rdata').hide();  
+      $('#log').empty();
+    }
     // 出力
-    let data = $(`<pre class='ts'>time:${ts}\n</pre><pre>${str}</pre>`);
+    let data = $(`<pre class='ts'>time:${ts}\n</pre><pre class="rdata">${str}</pre>`);
     $('#log').append(data);
     if(!$('#tsbtn').hasClass('active')) $('.ts').hide();
     if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
+
+
   }
 };
 chrome.serial.onReceive.addListener(receiveData);
