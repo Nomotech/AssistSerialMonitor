@@ -106,5 +106,6 @@ $('#loggerbtn').on('change', function(val){
   window.resizeTo(800,1000);
   $('.serialLogger').toggleClass('widelogger');
   $('.serialPlotter').toggleClass('wideplotter');
+  $('.map').toggleClass('active',false);
 });
 
