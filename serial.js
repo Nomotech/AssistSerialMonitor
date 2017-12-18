@@ -95,7 +95,7 @@ endAnimation('#sendStr');
 
 
 $('#graphbtn').on('change', function(val){
-  console.log(val);
+  //console.log(val);
   window.resizeTo(1500,1000);
   $('.serialLogger').toggleClass('widelogger');
   $('.serialPlotter').toggleClass('wideplotter');
@@ -107,7 +107,7 @@ $('#graphbtn').on('change', function(val){
 });
 
 $('#loggerbtn').on('change', function(val){
-  console.log(val);
+  //console.log(val);
   window.resizeTo(800,1000);
   $('.serialLogger').toggleClass('widelogger');
   $('.serialPlotter').toggleClass('wideplotter');

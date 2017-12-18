@@ -16,7 +16,7 @@ document.getElementById('sendBin').addEventListener("keyup", sendDataInput, fals
 let sendData = function() {
   let data = document.getElementById('sendStr').value;
   //console.log('send: ' + data);
-  chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function(log) {console.log(log)} );
+  chrome.serial.send(connectionId, convertStringToArrayBuffer(data), function(log) {} );
   dataObject = $(`<pre class="ts">time:${Date.now()}</pre><pre class="sendlog">${data}\n</pre>`);
   $('#log').append(dataObject);
 

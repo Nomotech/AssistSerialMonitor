@@ -48,11 +48,9 @@ let clickrstop = function(){
   if($('#connect').hasClass('active')){
     let data = ('<i class="fa fa-hand-paper-o" aria-hidden="true"></i> Stop');
     $('#rstop').empty(); $('#rstop').append(data);
-    $('.sendlog').css('display', 'block');
   }else{
     let data = ('<i class="fa fa-hand-o-right" aria-hidden="true"></i> Start');
     $('#rstop').empty(); $('#rstop').append(data);
-    $('.sendlog').hide();
   }
 }
 $('#rstop').on('click',function(){
@@ -81,7 +79,10 @@ $('#rsave').on('click', function(){
   chrome.fileSystem.chooseEntry(option, function(entry){
     console.log(entry);
     entry.createWriter(function(writer) {
-      let data = $('#log').text();
+      let selector = '#log pre.in';
+      if($('#tsbtn').hasClass('active')) selector += ',#log pre.ts';
+      if($('#sendlogbtn').hasClass('active')) selector += ',#log pre.sendlog'
+      let data = $(selector).text();
       writer.write(new Blob([data], {type: 'text/plain'}));
     });
     $('#log').toggleClass('green-flash',true);
