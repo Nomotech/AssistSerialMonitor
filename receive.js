@@ -29,10 +29,16 @@ let receiveData = function(info) {
     else if(scrollflag == -1 && scro < 600) scrollflag = true;  // 判定ゾーンに入ってきたとき
     
     // 出力
-    let data = $(`<pre class='ts'>time:${ts}\n</pre><pre>${str}</pre>`);
+    let data = $(`<pre class='ts'>time:${ts}\n</pre><pre class='in'>${str}</pre>`);
     $('#log').append(data);
     if(!$('#tsbtn').hasClass('active')) $('.ts').hide();
     if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
+    if(autodel > 0){
+      while($('#log pre.in').length > autodel){
+        $('pre.ts').eq(0).remove();
+        $('pre.in').eq(0).remove();
+      };
+    }
   }
 };
 chrome.serial.onReceive.addListener(receiveData);
@@ -113,3 +119,14 @@ $('#tsbtn').on('click',function(){
   }
   if(scrollflag == 1) $('#log').scrollTop($('#log').get(0).scrollHeight);
 });
+
+// auto delete receive box
+let autodel = 200;
+$('.autodelflag').on('change',function(e){
+  if($(this).prop('checked')) autodel = Number($('#autodel').val());
+  else autodel = 0;
+})
+$('#autodel').on('change',function(){
+  if($('.autodelflag').prop('checked')) autodel = Number($('#autodel').val());
+  else autodel = 0;
+})
