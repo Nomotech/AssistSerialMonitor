@@ -194,6 +194,7 @@ div.log {
   border-color: #428bca;
   overflow-y :scroll;
   margin-bottom: 10px;
+  resize: both;
 }
 
 .log pre{
@@ -253,10 +254,74 @@ input.searchStr {
 /*-------------------------------------< ploter >-------------------------------------*/
 .serialPlotter canvas{
 	margin:10px;
-	background-color: #AAFFFF;
-	width :100%;
-	height:800px;
+	position: absolute;
 }
+
+.graphdiv{
+	display :inline-block;
+	border: solid 1px rgba(120,180,255,1);
+}
+.graphdiv div{
+	position: relative;
+}
+
+.map {
+	margin-left: 15px;
+	transform-origin: 0% 0%; 
+	-webkit-transition: all 0.2s;
+	transform: scale(0.0);
+	width: 0px;
+	height: 0px;
+}
+
+.map.active {
+	transform: scale(1.0);
+	width: 800px;
+	height: 620px;
+}
+
+.line {
+	transform-origin: 0% 0%; 
+	-webkit-transition: all 0.2s;
+	transform: scale(0.0);
+	width: 0px;
+	height: 0px;
+}
+
+.line.active {
+	transform: scale(1.0);
+	width: 800px;
+	height: 320px;
+}
+
+.bar {
+	transform-origin: 0% 0%; 
+	-webkit-transition: all 0.2s;
+	transform: scale(0.0);
+	width: 0px;
+	height: 0px;
+}
+
+.bar.active {
+	transform: scale(1.0);
+	width: 400px;
+	height: 400px;
+}
+
+.pi {
+	transform-origin: 0% 0%; 
+	-webkit-transition: all 0.2s;
+	transform: scale(0.0);
+	width: 0px;
+	height: 0px;
+}
+
+.pi.active {
+	transform: scale(1.0);
+	width: 400px;
+	height: 400px;
+}
+
 
 /*-------------------------------------< animation >-------------------------------------*/
 .spin-icon {
@@ -321,6 +386,19 @@ input.searchStr {
 	100% {width: calc( 100% - 350px);}
 }
 
+@-webkit-keyframes mapaccordion{
+  0% {height:0px; width:0px;}
+	100% {height: 601px; width:601px;}
+}
 
-
+.createGraph {
+  -webkit-animation: createGraph 0.1s linear forwards;
+  animation-direction: normal;
+  animation-delay: 0.2s;
+}
+@-webkit-keyframes createGraph{
+  0% {}
+  50% {background-color :rgba(120,180,255,0.1);}
+  100% {}
+}
 

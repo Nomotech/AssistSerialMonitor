@@ -96,14 +96,9 @@ endAnimation('#sendStr');
 
 $('#graphbtn').on('change', function(val){
   //console.log(val);
-  window.resizeTo(1500,1000);
+  window.resizeTo(1200,1000);
   $('.serialLogger').toggleClass('widelogger');
   $('.serialPlotter').toggleClass('wideplotter');
-  // $("#sendbtn").prop("disabled", false);
-  // chrome.serial.getDevices(function(info){console.log(info)});
-  // chrome.serial.getConnections(function(info){console.log(info)});
-  // chrome.serial.getInfo(connectionId, function(info){console.log(info)});
-  // chrome.serial.getControlSignals(connectionId, function(info){console.log(info)});
 });
 
 $('#loggerbtn').on('change', function(val){
@@ -111,10 +106,5 @@ $('#loggerbtn').on('change', function(val){
   window.resizeTo(800,1000);
   $('.serialLogger').toggleClass('widelogger');
   $('.serialPlotter').toggleClass('wideplotter');
-  // $("#sendbtn").prop("disabled", false);
-  // chrome.serial.getDevices(function(info){console.log(info)});
-  // chrome.serial.getConnections(function(info){console.log(info)});
-  // chrome.serial.getInfo(connectionId, function(info){console.log(info)});
-  // chrome.serial.getControlSignals(connectionId, function(info){console.log(info)});
 });
 
